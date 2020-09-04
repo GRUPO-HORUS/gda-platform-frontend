@@ -1,28 +1,33 @@
 import { AuthModel } from './auth.model';
 import { AddressModel } from './address.model';
 import { SocialNetworksModel } from './social-networks.model';
+import { RolModel } from './rol.model';
 
 export class UserModel extends AuthModel {
   id: number;
   email: string;
-  nombreusuario: string;
+  nombreUsuario: string;
   nombre: string;
   apellidos: string;
   cedula: string;
   telefono: string;
   celular: string;
   credencial: string;
+  roles: RolModel[];
 
   setUser(user: any) {
     this.id = user.id;
     this.email = user.email || '';
-    this.nombreusuario = user.nombreusuario || '';
+    this.nombreUsuario = user.nombreUsuario || '';
     this.nombre = user.nombre || '';
     this.apellidos = user.apellidos || '';
     this.cedula = user.cedula || '';
     this.telefono = user.telefono || '';
     this.celular = user.celular || '';
     this.credencial = user.credencial || '';
+    //this.roles = user.roles || [];
+    //this.roles = [{id:1}];
+    this.roles = [];
   }
   /*id: number;
   username: string;

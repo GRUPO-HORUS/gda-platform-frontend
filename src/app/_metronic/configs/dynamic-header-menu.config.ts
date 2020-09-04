@@ -1,19 +1,34 @@
 export const DynamicHeaderMenuConfig = {
   items: [
+
     {
-      title: 'Dashboards',
+      title: 'Inicio',
       root: true,
       alignment: 'left',
       page: '/dashboard',
       translate: 'MENU.DASHBOARD',
     },
     {
+      title: 'Bienes',
+      root: true,
+      alignment: 'left',
+      page: '/bienes',
+    },
+
+    {
+      title: 'Usuarios',
+      root: true,
+      alignment: 'left',
+      page: '/usuarios',
+    },
+
+    /*{
       title: 'Builder',
       root: true,
       alignment: 'left',
       page: '/builder',
-    },
-    {
+    },*/
+    /*{
       title: 'Material UI',
       bullet: 'dot',
       page: '/material',
@@ -205,8 +220,8 @@ export const DynamicHeaderMenuConfig = {
           ]
         }
       ]
-    },
-    {
+    },*/
+    /*{
       title: 'NgBootstrap',
       bullet: 'dot',
       icon: 'flaticon-web',
@@ -386,6 +401,6 @@ export const DynamicHeaderMenuConfig = {
         //   ]
         // }
       ]
-    }
+    }*/
   ]
 };

@@ -13,6 +13,12 @@ export class AuthModel {
   expires_in: Date;
   token_type: string;
 
+  idUsuario: number;
+  nombreUsuario: String;
+  nombre: String;
+  apellidos: String;
+  correo: string;
+
   setAuth(auth: any) {
     this.access_token = auth.accessToken;
     this.refresh_token = auth.refreshToken;

@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ConfirmPasswordValidator } from './confirm-password.validator';
 import { UserModel } from '../_models/user.model';
 import { first } from 'rxjs/operators';
+import { AuthHTTPService } from '../_services/auth-http';
 
 @Component({
   selector: 'app-registration',
@@ -17,13 +18,18 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   hasError: boolean;
   isLoading$: Observable<boolean>;
 
+  rolesDrop: any[] = [];
+  errorMsg: string;
+
   // private fields
   private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+
+    private authHttpService: AuthHTTPService
   ) {
     this.isLoading$ = this.authService.isLoading$;
     // redirect to home if already logged in
@@ -42,9 +48,26 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   }
 
   initForm() {
+    /*this.authService.getAllRols().subscribe(roles => {
+      for (let i = 0; i < roles.length; i++) {
+          let r = roles[i];
+          this.rolesDrop.push({ label: r.nombre, value: r.id });
+      }
+      
+    });
+    this.rolesDrop = [{label: 'ADMINISTRADOR', value: 1}];*/
+
     this.registrationForm = this.fb.group(
       {
-        fullname: [
+        /*fullname: [
+          '',
+          Validators.compose([
+            Validators.required,
+            Validators.minLength(3),
+            Validators.maxLength(100),
+          ]),
+        ],*/
+        nombreUsuario: [
           '',
           Validators.compose([
             Validators.required,
@@ -53,7 +76,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
           ]),
         ],
         email: [
-          'qwe@qwe.qwe',
+          '',
           Validators.compose([
             Validators.required,
             Validators.email,
@@ -61,7 +84,15 @@ export class RegistrationComponent implements OnInit, OnDestroy {
             Validators.maxLength(320), // https://stackoverflow.com/questions/386294/what-is-the-maximum-length-of-a-valid-email-address
           ]),
         ],
-        password: [
+        credencial: [
+          '',
+          Validators.compose([
+            Validators.required,
+            Validators.minLength(6),
+            Validators.maxLength(60),
+          ]),
+        ],
+        nombre: [
           '',
           Validators.compose([
             Validators.required,
@@ -69,7 +100,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
             Validators.maxLength(100),
           ]),
         ],
-        cPassword: [
+        apellidos: [
           '',
           Validators.compose([
             Validators.required,
@@ -77,11 +108,46 @@ export class RegistrationComponent implements OnInit, OnDestroy {
             Validators.maxLength(100),
           ]),
         ],
-        agree: [false, Validators.compose([Validators.required])],
+        cedula: [
+          '',
+          Validators.compose([
+            Validators.required,
+            Validators.minLength(3),
+            Validators.maxLength(100),
+          ]),
+        ],
+        telefono: [
+          '',
+          Validators.compose([
+            Validators.required,
+            Validators.minLength(9),
+            Validators.maxLength(100),
+          ]),
+        ],
+        celular: [
+          '',
+          Validators.compose([
+            Validators.required,
+            Validators.minLength(8),
+            Validators.maxLength(100),
+          ]),
+        ],
+        /*rol: [
+          '',
+        ],*/
+        /*cPassword: [
+          '',
+          Validators.compose([
+            Validators.required,
+            Validators.minLength(3),
+            Validators.maxLength(100),
+          ]),
+        ],
+        agree: [false, Validators.compose([Validators.required])],*/
       },
-      {
+      /*{
         validator: ConfirmPasswordValidator.MatchPassword,
-      }
+      }*/
     );
   }
 
@@ -96,11 +162,14 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     const registrationSubscr = this.authService
       .registration(newUser)
       .pipe(first())
-      .subscribe((user: UserModel) => {
-        if (user) {
+      //.subscribe((user: UserModel) => {
+        //if (user) {
+      .subscribe((user: any) => {
+        if (user.id) {
           this.router.navigate(['/']);
         } else {
           this.hasError = true;
+          this.errorMsg = user.message;
         }
       });
     this.unsubscribe.push(registrationSubscr);

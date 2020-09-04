@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "gda-platform-front": {
+    "demo1-app": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,14 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/gda-platform-front",
+            "outputPath": "dist",
+            "showCircularDependencies": false,
+            "allowedCommonJsDependencies": [
+              "object-path",
+              "apexcharts",
+              "clipboard.js",
+              "highlight.js"
+            ],
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -28,10 +35,12 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss",
-              "node_modules/bootstrap/scss/bootstrap.scss"
+              "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/apexcharts/dist/apexcharts.min.js",
+              "node_modules/clipboard/dist/clipboard.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -52,8 +61,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "5mb",
+                  "maximumError": "7mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -67,18 +76,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "gda-platform-front:build"
+            "browserTarget": "demo1-app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "gda-platform-front:build:production"
+              "browserTarget": "demo1-app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "gda-platform-front:build"
+            "browserTarget": "demo1-app:build"
           }
         },
         "test": {
@@ -115,15 +124,19 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "gda-platform-front:serve"
+            "devServerTarget": "demo1-app:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "gda-platform-front:serve:production"
+              "devServerTarget": "demo1-app:serve:production"
             }
           }
         }
       }
-    }},
-  "defaultProject": "gda-platform-front"
+    }
+  },
+  "defaultProject": "demo1-app",
+  "cli": {
+    "analytics": false
+  }
 }

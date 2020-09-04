@@ -6,6 +6,11 @@ import { AuthModel } from '../_models/auth.model';
 import { AuthHTTPService } from './auth-http';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
+//import { serialize } from 'v8';
+import { RolModel } from '../_models/rol.model';
+import { UsuariosTabla } from '../../../util/usuarios-tabla';
+import { RolesTabla } from '../../../util/roles-tabla';
+import { UserRolDto } from '../../../util/user-rol.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -38,20 +43,25 @@ export class AuthService implements OnDestroy {
   }
 
   // public methods
-  login(email: string, password: string): Observable<UserModel> {
+  //login(email: string, password: string): Observable<UserModel> {
+    login(email: string, password: string): Observable<any> {
     this.isLoadingSubject.next(true);
     return this.authHttpService.login(email, password).pipe(
       map((auth: AuthModel) => {
-
-        console.log("Token: "+auth.access_token);
-
         const result = this.setAuthFromLocalStorage(auth);  //guarda el token en localStorage
         return result;
       }),
       switchMap(() => this.getUserByToken()),
       catchError((err) => {
-        console.error('err', err);
-        return of(undefined);
+        //console.error('err', err);
+        let error = new Error();
+        if(!err.error.apierror.formatted){
+          error.message = err.error.apierror.message;
+        }else{
+          error.message = "Ha ocurrido un error. Contacte al administrador."
+        }
+        
+        return of(error);
       }),
       finalize(() => this.isLoadingSubject.next(false))
     );
@@ -67,16 +77,17 @@ export class AuthService implements OnDestroy {
   getUserByToken(): Observable<UserModel> {
     const auth = this.getAuthFromLocalStorage();
     if (!auth || !auth.access_token) {
-      console.log("Indefinido");
+      //console.log("Indefinido");
       return of(undefined);
     }
-
     this.isLoadingSubject.next(true);
-    return this.authHttpService.getUserByToken(auth.access_token).pipe(
+
+    //return this.authHttpService.getUserByToken(auth.access_token).pipe(
+    return this.authHttpService.getUserByToken(auth.idUsuario, auth.nombreUsuario, auth.nombre, auth.apellidos, auth.correo).pipe(
       map((user: UserModel) => {
-        console.log(user);
+        //console.log(user);
         if (user) {
-          console.log("Trae usuario");
+          //console.log("Trae usuario");
           this.currentUserSubject = new BehaviorSubject<UserModel>(user);
         } else {
           this.logout();
@@ -85,6 +96,34 @@ export class AuthService implements OnDestroy {
       }),
       finalize(() => this.isLoadingSubject.next(false))
     );
+  }
+
+  getAllRols(): Observable<RolesTabla>{
+    const auth = this.getAuthFromLocalStorage(); 
+    return this.authHttpService.getAllRols(auth.access_token).pipe(
+      map((roles: RolesTabla) => {
+        return roles;
+      }),
+      );
+  }
+
+  asignRols(user: UserRolDto){
+    const auth = this.getAuthFromLocalStorage();
+    this.authHttpService.asignRols(auth.access_token, user).subscribe(response => {
+      console.log(response);
+
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  getAllUsers(): Observable<UsuariosTabla>{
+    const auth = this.getAuthFromLocalStorage(); 
+    return this.authHttpService.getAllUsers(auth.access_token).pipe(
+      map((users: UsuariosTabla) => {
+        return users;
+      }),
+      );
   }
 
   // need create new user then login
@@ -96,8 +135,16 @@ export class AuthService implements OnDestroy {
       }),
       switchMap(() => this.login(user.email, user.credencial)),
       catchError((err) => {
-        console.error('err', err);
-        return of(undefined);
+        //console.error('err', err);
+        //return of(undefined);
+
+        let error = new Error();
+        if(!err.error.apierror.formatted){
+          error.message = err.error.apierror.message;
+        }else{
+          error.message = "Ha ocurrido un error. Contacte al administrador."
+        }
+        return of(error);
       }),
       finalize(() => this.isLoadingSubject.next(false))
     );
@@ -120,6 +167,18 @@ export class AuthService implements OnDestroy {
   }
 
   private getAuthFromLocalStorage(): AuthModel {
+    try {
+      const authData = JSON.parse(
+        localStorage.getItem(this.authLocalStorageToken)
+      );
+      return authData;
+    } catch (error) {
+      console.error(error);
+      return undefined;
+    }
+  }
+
+  getUserFromLocalStorage(): AuthModel {
     try {
       const authData = JSON.parse(
         localStorage.getItem(this.authLocalStorageToken)

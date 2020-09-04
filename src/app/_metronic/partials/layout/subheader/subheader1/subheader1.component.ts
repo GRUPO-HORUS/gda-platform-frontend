@@ -20,6 +20,8 @@ export class Subheader1Component implements OnInit {
   description$: Observable<string>;
   @Input() title: string;
 
+  fecha: Date;
+
   constructor(
     private layout: LayoutService,
     private subheader: SubheaderService,
@@ -29,6 +31,9 @@ export class Subheader1Component implements OnInit {
   }
 
   ngOnInit() {
+
+    this.fecha = new Date();
+
     this.title$ = this.subheader.titleSubject.asObservable();
     this.breadcrumbs$ = this.subheader.breadCrumbsSubject.asObservable();
     this.description$ = this.subheader.descriptionSubject.asObservable();

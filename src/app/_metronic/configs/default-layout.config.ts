@@ -136,7 +136,7 @@ export const DefaultLayoutConfig = {
   aside: {
     self: {
       theme: 'dark', // light/dark
-      display: true,
+      display: false,
       fixed: true,
       minimize: {
         toggle: true, // allow toggle
@@ -167,7 +167,7 @@ export const DefaultLayoutConfig = {
 
   // Footer
   footer: {
-    display: true,
+    display: false,
     width: 'fluid',
     fixed: true,
   },
@@ -176,7 +176,7 @@ export const DefaultLayoutConfig = {
   extras: {
     // Search
     search: {
-      display: true,
+      display: false,
       layout: 'dropdown', // offcanvas, dropdown,
       offcanvas: {
         direction: 'right',
@@ -185,7 +185,7 @@ export const DefaultLayoutConfig = {
 
     // Notifications
     notifications: {
-      display: true,
+      display: false,
       layout: 'dropdown', // offcanvas, dropdown,
       dropdown: {
         style: 'dark', // light|dark
@@ -197,7 +197,7 @@ export const DefaultLayoutConfig = {
 
     // Quick Actionss
     quickActions: {
-      display: true,
+      display: false,
       layout: 'dropdown', // offcanvas, dropdown,
       dropdown: {
         style: 'dark', // light|dark
@@ -221,12 +221,12 @@ export const DefaultLayoutConfig = {
 
     // Languages
     languages: {
-      display: true,
+      display: false,
     },
 
     // Cart
     cart: {
-      display: true,
+      display: false,
       layout: 'dropdown', // offcanvas, dropdown,
       offcanvas: {
         direction: 'right',
@@ -243,7 +243,7 @@ export const DefaultLayoutConfig = {
 
     // Quick Panel
     quickPanel: {
-      display: true,
+      display: false,
       offcanvas: {
         direction: 'right',
       },

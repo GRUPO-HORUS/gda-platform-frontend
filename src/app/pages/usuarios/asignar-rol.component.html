@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>Asignar Roles</h2>
+<mat-dialog-content>
+    <!-- begin::Alert info *ngIf="!hasError"-->
+    <ng-container *ngIf="asigno">
+      <div class="mb-10 alert alert-custom alert-light-bien alert-dismissible">
+        <div class="alert-text">
+          Asignación correcta.
+        </div>
+      </div>
+    </ng-container>
+    <!-- end::Alert info-->
+    <div [formGroup]="formGroup">
+      <mat-form-field appearance="fill" style="width: 300px;">
+        <mat-label>Roles</mat-label>
+        <mat-select id="roles" formControlName="roles" multiple>
+          <mat-option *ngFor="let rol of rolesDrop" [value]="rol.value">{{rol.label}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="asignarRoles()" [disabled]="formGroup.controls.roles.value.length ==0">
+    Aceptar</button>
+  <button mat-button mat-dialog-close style="margin-left: 3px;">Cerrar</button>
+  <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. [mat-dialog-close]="true"-->
+</mat-dialog-actions>

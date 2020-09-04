@@ -12,6 +12,19 @@ const routes: Routes = [
         loadChildren: () =>
           import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
       },
+
+      {
+        path: 'bienes',
+        loadChildren: () =>
+          import('./bienes/bienes.module').then((m) => m.BienesModule),
+      },
+
+      {
+        path: 'usuarios',
+        loadChildren: () =>
+          import('./usuarios/usuarios.module').then((m) => m.UsuariosModule),
+      },
+
       {
         path: 'builder',
         loadChildren: () =>
@@ -48,6 +61,7 @@ const routes: Routes = [
       {
         path: '',
         redirectTo: 'dashboard',
+        //redirectTo: 'bienes',
         pathMatch: 'full',
       },
       {

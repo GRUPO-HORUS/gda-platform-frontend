@@ -10,16 +10,13 @@ import { LogoutComponent } from './logout/logout.component';
 import { AuthComponent } from './auth.component';
 import {TranslationModule} from '../i18n/translation.module';
 
-import { PruebaComponent } from './login/prueba.component';
-
 @NgModule({
   declarations: [
     LoginComponent,
     RegistrationComponent,
     ForgotPasswordComponent,
     LogoutComponent,
-    AuthComponent,
-    PruebaComponent
+    AuthComponent
   ],
   imports: [
     CommonModule,

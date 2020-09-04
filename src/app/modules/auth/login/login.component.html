@@ -14,7 +14,7 @@
         Bienvenido a GDB
       </h3>
       <span class="text-muted font-weight-bold font-size-h4"
-        >Nuevo aquí?
+        >Es nuevo aquí?
         <a
           routerLink="/auth/registration"
           id="kt_login_signup"
@@ -42,7 +42,7 @@
       <div
         class="mb-10 alert alert-custom alert-light-danger alert-dismissible"
       >
-        <div class="alert-text">Los datos ingresados son incorrectos.</div>
+        <div class="alert-text">{{errorMsg}}</div>
       </div>
     </ng-container>
     <!-- end::Alert error-->

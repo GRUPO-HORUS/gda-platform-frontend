@@ -1,6 +1,72 @@
 export const DynamicAsideMenuConfig = {
   items: [
     {
+      title: 'Administración',
+      root: true,
+      bullet: 'dot',
+      icon: 'flaticon2-user-outline-symbol',
+      svg: './assets/media/svg/icons/General/User.svg',
+      page: '/usuarios',
+      submenu: [
+        {
+          title: 'Tipos de Bienes',
+          page: 'tipos'
+        },
+        {
+          title: 'Categorías',
+          page: 'categorias'
+        },
+        {
+          title: 'Usuarios',
+          page: 'usuarios'
+        }
+      ]
+    },
+    {
+      title: 'Activos Fijos',
+      root: true,
+      bullet: 'dot',
+      icon: 'flaticon2-user-outline-symbol',
+      svg: './assets/media/svg/icons/Devices/Laptop.svg',
+      page: '/bienes',
+      submenu: [
+        {
+          title: 'Bienes',
+          page: 'bienes'
+        },
+        {
+          title: 'Ficha del Bien',
+          page: '/bienes/ficha'
+        },
+        {
+          title: 'Ubicación',
+          page: '/bienes/ubicacion'
+        },
+        {
+          title: 'Historial',
+          page: '/bienes/historial'
+        },
+        {
+          title: 'Reportes',
+          page: '/bienes/reportes'
+        }
+      ]
+    },
+    {
+      title: 'Contabilidad',
+      root: true,
+      bullet: 'dot',
+      icon: 'flaticon2-user-outline-symbol',
+      svg: './assets/media/svg/icons/Shopping/Calculator.svg',
+      page: '/contabilidad',
+      submenu: [
+        {
+          title: 'Coeficiente de depreciación',
+          page: '/user-management/roles'
+        }
+      ]
+    },
+    /*{
       title: 'Dashboard',
       root: true,
       icon: 'flaticon2-architecture-and-city',
@@ -279,8 +345,8 @@ export const DynamicAsideMenuConfig = {
           page: '/ngbootstrap/typehead'
         }
       ]
-    },
-    { section: 'Applications' },
+    },*/
+    /*{ section: 'Applications' },
     {
       title: 'eCommerce',
       bullet: 'dot',
@@ -352,7 +418,7 @@ export const DynamicAsideMenuConfig = {
           page: '/error/error-6'
         },
       ]
-    },
+    },*/
     // {
     //   title: 'Wizard',
     //   root: true,

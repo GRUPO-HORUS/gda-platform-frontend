@@ -1,9 +1,10 @@
 <!--begin::Brand-->
 <div class="brand flex-column-auto" id="kt_brand" [ngClass]="brandClasses">
   <!--begin::Logo-->
-  <a routerLink="/" class="brand-logo">
+  <!--<a routerLink="/" class="brand-logo">
     <img alt="Logo" [attr.src]="headerLogo" />
-  </a>
+  </a>-->
+  <a routerLink="/"><span style="color: white;">Inicio</span></a>
   <!--end::Logo-->
 
   <ng-container *ngIf="asideSelfMinimizeToggle">

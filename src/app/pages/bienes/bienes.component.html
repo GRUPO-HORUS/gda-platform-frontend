@@ -25,11 +25,11 @@
     <div class="tab-content">
       <!--begin::Table-->
       <table mat-table [dataSource]="dataSource">
-        <!-- Nombre Column -->
+        <!-- Detalle Column 
         <ng-container matColumnDef="detalle">
           <th mat-header-cell *matHeaderCellDef style="width: 250px;"> Detalle </th>
           <td mat-cell *matCellDef="let element" style="width: 250px;"> {{element.detalle}} </td>
-        </ng-container>
+        </ng-container>-->
 
         <!-- Apellido Column -->
         <ng-container matColumnDef="rotulado">
@@ -37,7 +37,7 @@
           <td mat-cell *matCellDef="let element"> {{element.rotulado}} </td>
         </ng-container>
 
-        <!-- Fecha de Incorporación Column -->
+        <!-- Fecha de Incorporación Column-->
         <ng-container matColumnDef="fechaIncorporacion">
           <th mat-header-cell *matHeaderCellDef> Fecha de Incorporación </th>
           <td mat-cell *matCellDef="let element"> {{element.fechaIncorporacion | date:'dd/MM/yyyy'}} </td>
@@ -46,7 +46,7 @@
         <!-- Valor de Incorporación Column -->
         <ng-container matColumnDef="valorIncorporacion">
           <th mat-header-cell *matHeaderCellDef> Valor de Incorporación </th>
-          <td mat-cell *matCellDef="let element"> {{element.valorIncorporacion}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.valorIncorporacion | number: '2.':'es-ES'}} </td>
         </ng-container>
 
         <!--Categoria Column -->
@@ -67,16 +67,16 @@
           <td mat-cell *matCellDef="let element"> {{element.gdaTipoBien}} </td>
         </ng-container>-->
 
-        <!--<ng-container matColumnDef="acciones">
+        <ng-container matColumnDef="acciones">
           <th mat-header-cell *matHeaderCellDef> Acciones </th>
           <td mat-cell *matCellDef="let element"> 
-            <a class="btn btn-light-success font-weight-bolder font-size-sm cursor-pointer" (click)="eliminar()"
-            >Eliminar</a></td>
-        </ng-container>-->
+            <a class="btn btn-icon btn-light-success font-weight-bolder font-size-sm cursor-pointer" title="Ver detalles" (click)="verDetalle(element.id, element.detalle)"
+            ><i class="flaticon-eye"></i></a></td>
+        </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
-      <mat-paginator [length]="length" [pageSize]="1" showFirstLastButtons></mat-paginator>
+      <mat-paginator [length]="length" [pageSize]="2" showFirstLastButtons></mat-paginator>
     </div>
   </div>
   <!--end::Body [pageSizeOptions]="[2, 3]"-->

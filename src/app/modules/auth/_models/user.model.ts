@@ -2,6 +2,7 @@ import { AuthModel } from './auth.model';
 import { AddressModel } from './address.model';
 import { SocialNetworksModel } from './social-networks.model';
 import { RolModel } from './rol.model';
+import { UnidadModel } from '../../../pages/ubicacion/model/unidad.model';
 
 export class UserModel extends AuthModel {
   id: number;
@@ -14,6 +15,7 @@ export class UserModel extends AuthModel {
   celular: string;
   credencial: string;
   roles: RolModel[];
+  unidad: UnidadModel;
 
   setUser(user: any) {
     this.id = user.id;

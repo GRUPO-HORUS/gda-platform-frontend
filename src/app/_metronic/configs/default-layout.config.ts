@@ -135,8 +135,8 @@ export const DefaultLayoutConfig = {
   // Aside
   aside: {
     self: {
-      theme: 'dark', // light/dark
-      display: false,
+      theme: 'light', // light/dark
+      display: true,
       fixed: true,
       minimize: {
         toggle: true, // allow toggle

@@ -5,7 +5,10 @@ import { BienesService } from './bienes.service';
 import { TipoBienModel } from './model/tipo-bien.model';
 import { CategoriaModel } from './model/categoria.model';
 import { UnidadModel } from './model/unidad.model';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
+import { DetalleBienComponent } from './detalle-bien/detalle-bien.component';
+import { MatDialog } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-bienes',
@@ -13,8 +16,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./bienes.component.scss']
 })
 export class BienesComponent implements OnInit {
-  displayedColumns: string[] = [ 'rotulado', 'detalle', 'fechaIncorporacion', 'valorIncorporacion','gdaCategoriaBienId', 'gdaUnidadUbicacionId'];
-  //, 'gdaCategoriaBienId', 'gdaTipoBien'
+  displayedColumns: string[] = [ 'rotulado', 'fechaIncorporacion', 'valorIncorporacion','gdaCategoriaBienId', 'gdaUnidadUbicacionId','acciones'];
+  //'detalle', 'gdaCategoriaBienId', 'gdaTipoBien'
   dataSource;
   length: number=10;
   bandera: boolean= false;
@@ -24,15 +27,24 @@ export class BienesComponent implements OnInit {
 
   cantNuevos;
 
-  constructor(private bienesService: BienesService, private router: Router) {
-    if(this.router.getCurrentNavigation().extras.state !== undefined){
+  constructor(private bienesService: BienesService, private router: Router, private dialog: MatDialog) {
+    /*if(this.router.getCurrentNavigation().extras.state !== undefined){
         //console.log(this.router.getCurrentNavigation().extras.state.bien);
         this.nuevoBien = this.router.getCurrentNavigation().extras.state.bien;
         this.bandera = true;
         //this.nuevoBien2 = localStorage.getItem(this.nuevoBien.id);
-
         localStorage.setItem(this.nuevoBien.id, JSON.stringify(this.nuevoBien));
-    }
+    }*/
+    //location.subscribe(val => console.log(val));
+    router.events.subscribe((event) => {
+      if(event instanceof NavigationEnd) {
+        if(this.router.getCurrentNavigation().extras.state !== undefined){
+          console.log(event.url);
+          this.nuevoBien = this.router.getCurrentNavigation().extras.state.bien;
+          this.bandera = true;
+        }
+      }
+    });
     
   }
 
@@ -41,14 +53,11 @@ export class BienesComponent implements OnInit {
         //console.log(this.router.getCurrentNavigation().extras.state.bien);
         this.nuevoBien = this.router.getCurrentNavigation().extras.state.bien;
         this.bandera = true;
-
         this.cantNuevos = localStorage.getItem('cantNuevos') || 1;
         let cantNro = +this.cantNuevos;
         localStorage.setItem('cantNuevos',cantNro+'');
-
         localStorage.setItem(cantNro+'', JSON.stringify(this.nuevoBien));
     }
-    
   }*/
 
 
@@ -61,22 +70,24 @@ export class BienesComponent implements OnInit {
       //let bienesA = bienes.content;
       /*bienes.content.push({id:2, rotulado: '0000-0001-002', detalle: 'Monitor Samsung', fechaIncorporacion: new Date(), valorIncorporacion: 700000, 
       gdaCategoriaBienId:{id:'7fdfbc99-a168-4f31-b794-a7d7ac02bd00', descripcion: 'UNIDAD CENTRAL DE PROCESAMIENTO (CPU)'}, gdaUnidadUbicacionId:{id:'7fdfbc99-a168-4f31-b794-a7d7ac02bd00', nombre: 'Gestión de Proyectos'}});*/
-      //this.nuevoBien2 = localStorage.getItem(this.nuevoBien.id);
 
       if(this.bandera){
         this.length = bienes.totalElements+1;
-        this.nuevoBien2 = JSON.parse(localStorage.getItem(this.nuevoBien.id));
-        console.log("Es "+this.nuevoBien2);
-        bienes.content.push(this.nuevoBien2);
+        //this.nuevoBien2 = JSON.parse(localStorage.getItem(this.nuevoBien.id));
+        bienes.content.push(this.nuevoBien);
       }else{
         this.length = bienes.totalElements;
       }
 
       this.dataSource = new MatTableDataSource<BienData>(bienes.content);
       this.dataSource.paginator = this.paginator;
-      //this.length =bienes.totalElements;
+      this.length =bienes.totalElements;
       
     });
+  }
+
+  verDetalle(id, detalle){
+    const dialogRef = this.dialog.open(DetalleBienComponent, { data: {id: id, detalle: detalle} ,height: '350px', width: '450px'});
   }
 
 }

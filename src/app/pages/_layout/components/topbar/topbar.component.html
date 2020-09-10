@@ -229,6 +229,17 @@
 <ng-container *ngIf="extrasUserDisplay">
   <ng-container *ngIf="extrasUserLayout === 'offcanvas'">
     <ng-container *ngIf="user$ | async as _user">
+      <div class="topbar-item">
+        <span class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">
+          Entidad:</span>
+        <span class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">
+            {{_user.entidad}}</span>
+        <span class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">
+          Unidad:  </span>
+        <span class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">
+            {{_user.unidad}}</span>
+         
+      </div>
       <!--begin::User-->
       <div class="topbar-item">
         <div

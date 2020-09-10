@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>Detalles del Bien</h2>
+<mat-dialog-content>
+  <p>{{detalle}}</p>
+
+  <h2 mat-dialog-title>Atributos:</h2>
+  <ul>
+    <li *ngFor="let detalle of detallesList">{{detalle.atributo}}: {{detalle.valor}}</li>
+  </ul>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <!--<button mat-button >Aceptar</button>-->
+  <button mat-button mat-dialog-close style="margin-left: 3px;">Cerrar</button>
+  <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. [mat-dialog-close]="true"-->
+</mat-dialog-actions>

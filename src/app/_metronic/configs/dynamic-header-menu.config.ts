@@ -1,7 +1,7 @@
 export const DynamicHeaderMenuConfig = {
   items: [
 
-    {
+    /*{
       title: 'Inicio',
       root: true,
       alignment: 'left',
@@ -20,7 +20,7 @@ export const DynamicHeaderMenuConfig = {
       root: true,
       alignment: 'left',
       page: '/usuarios',
-    },
+    },*/
 
     /*{
       title: 'Builder',

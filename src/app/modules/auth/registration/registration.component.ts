@@ -21,6 +21,9 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   rolesDrop: any[] = [];
   errorMsg: string;
 
+  entidadForm: FormGroup;
+  unidadForm: FormGroup;
+
   // private fields
   private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 
@@ -149,6 +152,30 @@ export class RegistrationComponent implements OnInit, OnDestroy {
         validator: ConfirmPasswordValidator.MatchPassword,
       }*/
     );
+
+    this.entidadForm = this.fb.group(
+      {
+        entidad: [
+          '',
+          Validators.compose([
+            Validators.required,
+            Validators.minLength(3),
+            Validators.maxLength(100),
+          ]),
+        ],
+      });
+
+      this.unidadForm = this.fb.group(
+        {
+          unidad: [
+            '',
+            Validators.compose([
+              Validators.required,
+              Validators.minLength(3),
+              Validators.maxLength(100),
+            ]),
+          ],
+      });
   }
 
   submit() {

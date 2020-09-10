@@ -83,7 +83,7 @@ export class AuthService implements OnDestroy {
     this.isLoadingSubject.next(true);
 
     //return this.authHttpService.getUserByToken(auth.access_token).pipe(
-    return this.authHttpService.getUserByToken(auth.idUsuario, auth.nombreUsuario, auth.nombre, auth.apellidos, auth.correo).pipe(
+    return this.authHttpService.getUserByToken(auth.idUsuario, auth.nombreUsuario, auth.nombre, auth.apellidos, auth.correo, auth.entidad, auth.unidad).pipe(
       map((user: UserModel) => {
         //console.log(user);
         if (user) {

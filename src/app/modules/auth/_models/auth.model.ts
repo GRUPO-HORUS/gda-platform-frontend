@@ -1,3 +1,5 @@
+import { UnidadModel } from "../../../pages/ubicacion/model/unidad.model";
+
 export class AuthModel {
   /*accessToken: string;
   refreshToken: string;
@@ -18,6 +20,8 @@ export class AuthModel {
   nombre: String;
   apellidos: String;
   correo: string;
+  unidad: UnidadModel;
+  entidad: string;
 
   setAuth(auth: any) {
     this.access_token = auth.accessToken;

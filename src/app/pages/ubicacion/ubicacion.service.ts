@@ -14,11 +14,13 @@ import { SubCategoriasTabla } from '../../util/subcategorias-tabla';
 import { TiposTabla } from '../../util/tipos-tabla';
 import { AtributoValorBienDTO } from '../../util/atributo-valor-bien.dto';
 import { AtributosBien } from '../../util/atributos-bien';
+import { UnidadesTabla } from '../../util/unidades-tabla';
+import { UnidadModel } from './model/unidad.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class BienesService implements OnDestroy {
+export class UbicacionService implements OnDestroy {
   // private fields
   private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
   private isLoadingSubject: BehaviorSubject<boolean>;
@@ -55,11 +57,11 @@ export class BienesService implements OnDestroy {
       );
   }
 
-  getAllTiposBien(): Observable<TiposTabla>{
+  getAllUnidadesEntidad(entidad): Observable<UnidadModel[]>{
     const auth = this.getAuthFromLocalStorage(); 
-    return this.authHttpService.getAllTiposBien(auth.access_token).pipe(
-      map((tipos: TiposTabla) => {
-        return tipos;
+    return this.authHttpService.getAllUnidadesEntidad(auth.access_token, entidad).pipe(
+      map((unidades: UnidadModel[]) => {
+        return unidades;
       }),
       );
   }

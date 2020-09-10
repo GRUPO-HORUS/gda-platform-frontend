@@ -10,6 +10,8 @@ import { LogoutComponent } from './logout/logout.component';
 import { AuthComponent } from './auth.component';
 import {TranslationModule} from '../i18n/translation.module';
 
+import {MatStepperModule} from '@angular/material/stepper';
+
 @NgModule({
   declarations: [
     LoginComponent,
@@ -25,6 +27,7 @@ import {TranslationModule} from '../i18n/translation.module';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MatStepperModule
   ]
 })
 export class AuthModule {}

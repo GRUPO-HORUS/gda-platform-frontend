@@ -49,7 +49,6 @@ export class UsuariosComponent implements OnInit {
       id: id}, height: '350px', width: '450px'});
 
     //this.modalService.open(this.modal);
-
   }
 }
 

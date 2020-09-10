@@ -14,6 +14,10 @@ import { SubCategoriasTabla } from '../../../../util/subcategorias-tabla';
 import { UserRolDto } from '../../../../util/user-rol.dto';
 import { BienesTabla } from '../../../../util/bienes-tabla';
 import { TiposTabla } from '../../../../util/tipos-tabla';
+import { AtributoValorBienDTO } from '../../../../util/atributo-valor-bien.dto';
+import { AtributosBien } from '../../../../util/atributos-bien';
+import { UnidadesTabla } from '../../../../util/unidades-tabla';
+import { UnidadModel } from '../../../../pages/ubicacion/model/unidad.model';
 
 //const API_USERS_URL = `${environment.apiUrl}/users`;
 const API_USERS_URL = 'http://localhost:8081/api/v1';
@@ -94,6 +98,25 @@ export class AuthHTTPService {
     });
   }
 
+  getDetallesBien(token, idBien): Observable<AtributosBien> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.get<AtributosBien>(API_USERS_URL+'/bien/detalle/'+idBien, {
+      headers: httpHeaders,
+    });
+  }
+
+  //Recupera todas las categorias existentes
+  getAllUnidadesEntidad(token, entidad): Observable<UnidadModel[]> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.get<UnidadModel[]>(API_USERS_URL+'/gestionEntidades/entidad/unidades/?nombre='+entidad, {
+      headers: httpHeaders,
+    });
+  }
+
   //Recupera todas las categorias existentes
   getAllCategorias(token): Observable<CategoriasTabla> {
     const httpHeaders = new HttpHeaders({
@@ -133,14 +156,15 @@ export class AuthHTTPService {
   }*/
 
   //Temporal
-  getUserByToken(id, nombreUsuario, nombre, apellidos, email): Observable<UserModel> {
+  getUserByToken(id, nombreUsuario, nombre, apellidos, email, entidad, unidad): Observable<UserModel> {
     const user = new UserModel();
-
     user.id = id;
     user.nombreUsuario = nombreUsuario;
     user.nombre = nombre;
     user.apellidos = apellidos;
     user.email = email;
+    user.entidad = entidad;
+    user.unidad = unidad;
 
     /*if (!user) {
       return of(undefined);

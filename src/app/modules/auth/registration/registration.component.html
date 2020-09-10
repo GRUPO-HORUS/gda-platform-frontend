@@ -1,20 +1,27 @@
+<a
+    routerLink="/auth/login"
+    type="button"
+    id="kt_login_signup_cancel"
+    class="btn btn-light-primary font-weight-bolder font-size-h6 px-8 py-4 my-3" style="float:right;">
+    Volver al Login
+</a>
+<mat-horizontal-stepper linear #stepper>
+  <mat-step [stepControl]="registrationForm">
 <!--begin::Signup-->
 <div class="login-form login-signup">
   <!--begin::Form-->
-  <form
-    class="form"
+  <form class="form"
     novalidate="novalidate"
     id="kt_login_signup_form"
     [formGroup]="registrationForm"
-    (ngSubmit)="submit()"
-  >
+    (ngSubmit)="submit()">
     <!--begin::Title-->
     <div class="pb-13 pt-lg-0 pt-5">
       <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">
         Registro
       </h3>
       <p class="text-muted font-weight-bold font-size-h4">
-        Complete sus datos para crear la cuenta.
+        Complete los datos requeridos para crear la cuenta.
       </p>
     </div>
     <!--end::Title-->
@@ -39,8 +46,7 @@
         formControlName="fullname"
         placeholder="Nombre completo"
         autocomplete="off"
-        [ngClass]="{'is-invalid': registrationForm.controls['fullname'].invalid}"
-      />
+        [ngClass]="{'is-invalid': registrationForm.controls['fullname'].invalid}"/>
       <ng-container
         [ngTemplateOutlet]="formError"
         [ngTemplateOutletContext]="{
@@ -68,11 +74,13 @@
     </div>-->
     <!--end::Form group-->
 
+    <div class="row">
+      <div class="col-md">
     <!--begin::Form group-->
     <div class="form-group">
       <label class="font-size-h6 font-weight-bolder text-dark">Nombre de usuario</label>
       <input
-        class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6"
+        class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
         type="text"
         name="nombreUsuario"
         formControlName="nombreUsuario"
@@ -106,12 +114,14 @@
       ></ng-container>
     </div>
     <!--end::Form group-->
-
+    </div>
+    <!--end:: col-->
+    <div class="col-md">
     <!--begin::Form group-->
     <div class="form-group">
       <label class="font-size-h6 font-weight-bolder text-dark">Email</label>
       <input
-        class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6"
+        class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
         type="email"
         placeholder="Email"
         name="email"
@@ -153,13 +163,16 @@
       ></ng-container>
     </div>
     <!--end::Form group-->
-
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md">
     <!--begin::Form group-->
     <div class="form-group">
       <label class="font-size-h6 font-weight-bolder text-dark pt-5"
         >Password</label>
       <input
-        class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6"
+        class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
         type="password"
         placeholder="Password"
         name="credencial"
@@ -195,7 +208,8 @@
       ></ng-container>
     </div>
     <!--end::Form group-->
-
+    </div>
+    <!--end:: col-->
     <!--begin::Form group-->
     <!--<div class="form-group">
       <label class="font-size-h6 font-weight-bolder text-dark pt-5">Roles</label>
@@ -207,12 +221,12 @@
     
     </div>-->
     <!--end::Form group-->
-
+    <div class="col-md">
     <!--begin::Form group-->
     <div class="form-group">
       <label class="font-size-h6 font-weight-bolder text-dark pt-5">Nombre</label>
       <input
-        class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6"
+        class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
         type="text"
         name="nombre"
         formControlName="nombre"
@@ -221,39 +235,47 @@
         [ngClass]="{'is-invalid': registrationForm.controls['nombre'].invalid}"/>
     </div>
     <!--end::Form group-->
-
-    <!--begin::Form group-->
-    <div class="form-group">
-      <label class="font-size-h6 font-weight-bolder text-dark pt-5">Apellidos</label>
-      <input
-        class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6"
-        type="text"
-        name="apellidos"
-        formControlName="apellidos"
-        placeholder="Apellidos"
-        autocomplete="off"
-        [ngClass]="{'is-invalid': registrationForm.controls['apellidos'].invalid}"/>
+  </div>
+  </div>
+  <div class="row">
+    <div class="col-md">
+      <!--begin::Form group-->
+      <div class="form-group">
+        <label class="font-size-h6 font-weight-bolder text-dark pt-5">Apellidos</label>
+        <input
+          class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
+          type="text"
+          name="apellidos"
+          formControlName="apellidos"
+          placeholder="Apellidos"
+          autocomplete="off"
+          [ngClass]="{'is-invalid': registrationForm.controls['apellidos'].invalid}"/>
+      </div>
+      <!--end::Form group-->
     </div>
-    <!--end::Form group-->
-
-    <!--begin::Form group-->
-    <div class="form-group">
-      <label class="font-size-h6 font-weight-bolder text-dark pt-5">Número de documento</label>
-      <input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6"
-        type="text"
-        name="cedula"
-        formControlName="cedula"
-        placeholder="Número de documento"
-        autocomplete="off"
-        [ngClass]="{'is-invalid': registrationForm.controls['cedula'].invalid}"/>
+    <div class="col-md">
+      <!--begin::Form group-->
+      <div class="form-group">
+        <label class="font-size-h6 font-weight-bolder text-dark pt-5">Número de documento</label>
+        <input class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
+          type="text"
+          name="cedula"
+          formControlName="cedula"
+          placeholder="Número de documento"
+          autocomplete="off"
+          [ngClass]="{'is-invalid': registrationForm.controls['cedula'].invalid}"/>
+      </div>
+      <!--end::Form group-->
     </div>
-    <!--end::Form group-->
-
+</div>
+<!--end::row-->
+<div class="row">
+  <div class="col-md">
     <!--begin::Form group-->
     <div class="form-group">
       <label class="font-size-h6 font-weight-bolder text-dark pt-5">Teléfono</label>
       <input
-        class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6"
+        class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
         type="text"
         name="telefono"
         formControlName="telefono"
@@ -262,12 +284,13 @@
         [ngClass]="{'is-invalid': registrationForm.controls['telefono'].invalid}"/>
     </div>
     <!--end::Form group-->
-
+  </div>
+  <div class="col-md">
     <!--begin::Form group-->
     <div class="form-group">
       <label class="font-size-h6 font-weight-bolder text-dark pt-5">Celular</label>
       <input
-        class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6"
+        class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
         type="text"
         name="celular"
         formControlName="celular"
@@ -276,7 +299,8 @@
         [ngClass]="{'is-invalid': registrationForm.controls['celular'].invalid}"/>
     </div>
     <!--end::Form group-->
-
+  </div>
+  </div>
     <!--begin::Form group-->
     <!--<div class="form-group">
       <label class="font-size-h6 font-weight-bolder text-dark pt-5"
@@ -344,30 +368,6 @@
     </div>-->
     <!--end::Form group-->
 
-    <!--begin::Form group-->
-    <!--Condicion en boton Aceptar [disabled]="registrationForm.invalid || !registrationForm.controls['agree'].value"-->
-    <div class="form-group d-flex flex-wrap pb-lg-0 pb-3">
-      <button
-        type="submit"
-        id="kt_login_signup_submit"
-        [disabled]="registrationForm.invalid"
-        class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4">
-        Aceptar
-      </button>
-      <a
-        routerLink="/auth/login"
-        type="button"
-        id="kt_login_signup_cancel"
-        class="btn btn-light-primary font-weight-bolder font-size-h6 px-8 py-4 my-3"
-      >
-        Cancelar
-      </a>
-
-      <ng-container *ngIf="isLoading$ | async">
-        <span class="spinner spinner-primary ml-5"></span>
-      </ng-container>
-    </div>
-    <!--end::Form group-->
   </form>
   <!--end::Form-->
 </div>
@@ -389,3 +389,75 @@
     </div>
   </ng-container>
 </ng-template>
+</mat-step>
+<mat-step [stepControl]="entidadForm">
+    <!--begin::Form-->
+    <form class="form"
+    novalidate="novalidate"
+    id="kt_login_signup_form"
+    [formGroup]="entidadForm"
+    (ngSubmit)="submit()">
+     <!--begin::Form group-->
+     <div class="form-group">
+      <label class="font-size-h6 font-weight-bolder text-dark pt-5">Indique el nombre de la entidad</label>
+      <input
+        class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
+        type="text"
+        name="entidad"
+        formControlName="entidad"
+        placeholder="Ejemplo: Banco Internacional"
+        autocomplete="off"
+        [ngClass]="{'is-invalid': entidadForm.controls['entidad'].invalid}"/>
+    </div>
+    <!--end::Form group-->
+
+    </form>
+</mat-step>
+<mat-step [stepControl]="unidadForm">
+  <!--begin::Form-->
+  <form class="form"
+  novalidate="novalidate"
+  id="kt_login_signup_form"
+  [formGroup]="unidadForm"
+  (ngSubmit)="submit()">
+    <!--begin::Form group-->
+    <div class="form-group">
+      <label class="font-size-h6 font-weight-bolder text-dark pt-5" *ngIf="entidadForm.controls['entidad'].value ==''">Indique el nombre de la primera unidad</label>
+      <label class="font-size-h6 font-weight-bolder text-dark pt-5" *ngIf="entidadForm.controls['entidad'].value !=''">Indique el nombre de la primera unidad de {{entidadForm.controls['entidad'].value}}</label>
+      <input
+        class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
+        type="text"
+        name="unidad"
+        formControlName="unidad"
+        placeholder="Ejemplo: Casa Matriz del Banco Internacional"
+        autocomplete="off"
+        [ngClass]="{'is-invalid': unidadForm.controls['unidad'].invalid}"/>
+    </div>
+    <!--end::Form group-->
+
+    <!--begin::Form group-->
+    <!--Condicion en boton Aceptar [disabled]="registrationForm.invalid || !registrationForm.controls['agree'].value"-->
+    <div class="form-group d-flex flex-wrap pb-lg-0 pb-3">
+      <button
+        type="submit"
+        id="kt_login_signup_submit"
+        [disabled]="registrationForm.invalid || entidadForm.invalid || unidadForm.invalid"
+        class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4">
+        Aceptar
+      </button>
+      <a
+        routerLink="/auth/login"
+        type="button"
+        id="kt_login_signup_cancel"
+        class="btn btn-light-primary font-weight-bolder font-size-h6 px-8 py-4 my-3">
+        Volver
+      </a>
+
+      <ng-container *ngIf="isLoading$ | async">
+        <span class="spinner spinner-primary ml-5"></span>
+      </ng-container>
+    </div>
+    <!--end::Form group-->
+  </form>
+</mat-step>
+</mat-horizontal-stepper>

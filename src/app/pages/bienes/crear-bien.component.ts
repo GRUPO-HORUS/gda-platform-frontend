@@ -31,7 +31,7 @@ export class CrearBienComponent implements OnInit {
   asignacionForm: FormGroup;
   contableForm: FormGroup;
 
-  mantenimientoForm: FormGroup;
+  adicionalForm: FormGroup;
   unidadesD;
 
   constructor(private authService: AuthService, private fb: FormBuilder, private bienesService: BienesService, private ubicacionService: UbicacionService, private router: Router) { }
@@ -126,6 +126,15 @@ export class CrearBienComponent implements OnInit {
             Validators.required,
           ]),
         ],
+        unidad: [
+          '',
+          /*Validators.compose([
+            Validators.required
+          ]),*/
+        ],
+        usuarioResponsable: [
+          null
+        ], 
       },
       /*{
         validator: ConfirmPasswordValidator.MatchPassword,
@@ -173,7 +182,7 @@ export class CrearBienComponent implements OnInit {
         ],
       });
 
-    this.mantenimientoForm = this.fb.group(
+    this.adicionalForm = this.fb.group(
       {
         fechaMantenimiento: [
           null

@@ -2,13 +2,13 @@
 <!--<div class="login login-1 login-signin-on d-flex flex-column flex-lg-row flex-column-fluid bg-white" id="kt_login">-->
   <div class="login login-1 login-signin-on flex-column flex-lg-row flex-column-fluid bg-white" id="kt_login">
     <!-- begin::Alert info *ngIf="!hasError"-->
-    <ng-container *ngIf="guardo">
+    <!--<ng-container *ngIf="guardo">
       <div class="mb-10 alert alert-custom alert-light-bien alert-dismissible">
         <div class="alert-text">
-          Se ha guardado correctamente el bien.
+          Se ha guardado correctamente el coeficiente.
         </div>
       </div>
-    </ng-container>
+    </ng-container>-->
     <!-- end::Alert info-->
   
     <!-- begin::Alert error-->
@@ -22,58 +22,47 @@
     <div class="card-header border-0 py-5">
     <!--<div class="pb-13 pt-lg-0 pt-5" style="margin-left: 50px;">-->
       <h3 class="card-title align-items-start flex-column"><!--font-weight-bolder text-dark font-size-h4 font-size-h1-lg-->
-        <span class="card-label font-weight-bolder text-dark" style="font-size: 1.275rem !important">Registro del Bien</span>
+        <span class="card-label font-weight-bolder text-dark" style="font-size: 1.275rem !important">Registro del Coeficiente de Depreciación</span>
       </h3>
       <!--<p class="text-muted font-weight-bold font-size-h4">Complete los datos requeridos para crear el bien.</p>-->
     </div>
     <!--end::Title-->
     <div class="container">
-     
-      <button
-      type="button"
-      id="kt_login_signup_submit"
-      [disabled]="crearBienForm.invalid"
-      class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4"
-      (click)="submit()">
-      Guardar
-      </button>
-      
-  <mat-tab-group style="margin-top: 15px; width: 100%;">
-    <mat-tab label="Datos Básicos">
       <ng-container>
-        <div class="mb-10 alert alert-custom alert-light-info alert-dismissible">
+        <div class="mb-10 alert alert-custom alert-light-info alert-dismissible" *ngIf="!guardo">
           <div class="alert-text">
-            Debe completar al menos los datos básicos para poder guardar el bien.
+            Debe completar los datos requeridos para guardar.
+          </div>
+        </div>
+      </ng-container >
+        
+      <ng-container *ngIf="guardo">
+        <div class="mb-10 alert alert-custom alert-light-bien alert-dismissible">
+          <div class="alert-text">
+            {{msgFinal}}
           </div>
         </div>
       </ng-container>
       <!--begin::Form-->
-      <form
-      class="form"
+      <form class="form"
       novalidate="novalidate"
       id="kt_login_signup_form"
-      [formGroup]="crearBienForm"
+      [formGroup]="cargarCoefForm"
       (ngSubmit)="submit()"> 
-      <div class="row">
+      <!--<div class="row">
         <div class="col-md">
-          <!--begin::Form group-->
           <div class="form-group" style="margin-left: 10px;">
             <label class="font-size-h6 font-weight-bolder text-dark pt-5">Categoría</label>
             <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" 
             data-live-search="true" formControlName="categoria" (change)="getCategoriasHijas($event)"
-            [ngClass]="{'is-invalid': crearBienForm.controls['categoria'].invalid}">
-              <!--<option>
-                Seleccione
-              </option>-->
+            [ngClass]="{'is-invalid': cargarCoefForm.controls['categoria'].invalid}">
               <option *ngFor="let categoria of categoriasDrop" [value]="categoria.value">
                   {{categoria.label}}
               </option>
             </select>
           </div>
-          <!--end::Form group-->
         </div>
         <div class="col-md">
-          <!--begin::Form group-->
           <div class="form-group" style="margin-left: 10px;">
             <label class="font-size-h6 font-weight-bolder text-dark pt-5">Sub Categoría</label>
             <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" data-live-search="true" formControlName="subcategoria">
@@ -82,151 +71,50 @@
               </option>
             </select>
           </div>
-          <!--end::Form group-->
+        
         </div>
-
-        <div class="col-md">
-          <!--begin::Form group-->
-          <div class="form-group" style="margin-left: 10px;">
-            <label class="font-size-h6 font-weight-bolder text-dark pt-5">Tipo</label>
-            <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" 
-            data-live-search="true" formControlName="tipo" 
-            [ngClass]="{'is-invalid': crearBienForm.controls['tipo'].invalid}">
-              <option *ngFor="let tipo of tiposBienDrop" [value]="tipo.value">
-                  {{tipo.label}}
-              </option>
-            </select>
-          </div>
-          <!--end::Form group-->
-        </div>
-      </div>
+      </div>-->
       <!--end::row-->
+        <div class="row">
+          <div class="col-md">
+          <!--begin::Form group-->
       <div class="form-group" style="margin-left: 10px;">
-        <label class="font-size-h6 font-weight-bolder text-dark">Detalle</label>
-        <!--<input
-          class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
-          type="text"
-          name="detalle"
-          formControlName="detalle"
-          placeholder="Detalle"
-          autocomplete="off"
-          [ngClass]="{'is-invalid': crearBienForm.controls['detalle'].invalid}"/>-->
-        <textarea type="text" id="form7" rows="8" class="form-control form-control-solid" formControlName="detalle" [ngClass]="{'is-invalid': crearBienForm.controls['detalle'].invalid}"></textarea>
-        <ng-container
-          [ngTemplateOutlet]="formError"
-          [ngTemplateOutletContext]="{
-            validation: 'required',
-            message: 'El detalle del bien es requerido',
-            control: crearBienForm.controls['detalle']
-          }"
-        ></ng-container>
-        <ng-container
-          [ngTemplateOutlet]="formError"
-          [ngTemplateOutletContext]="{
-            validation: 'minlength',
-            message: 'El detalle del bien debe tener al menos 3 caracteres',
-            control: crearBienForm.controls['detalle']
-          }"
-        ></ng-container>
-        <ng-container
-          [ngTemplateOutlet]="formError"
-          [ngTemplateOutletContext]="{
-            validation: 'maxLength',
-            message: 'El detalle del bien debe tener como máximo 250 caracteres',
-            control: crearBienForm.controls['detalle']
-          }"
-        ></ng-container>
-      </div>
-      <!--end::Form group-->
-      <div class="row">
-        <div class="col-md">
-      <!--begin::Form group-->
-      <div class="form-group" style="margin-left: 10px;">
-        <label class="font-size-h6 font-weight-bolder text-dark">Valor de Incorporación</label>
+        <label class="font-size-h6 font-weight-bolder text-dark">Coeficiente de Depreciación</label>
         <input
           class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
           type="number"
           min="0"
-          name="valorIncorporacion"
-          formControlName="valorIncorporacion"
-          placeholder="Valor de Incorporación"
+          step="0.1"
+          name="coefDepreciacion"
+          formControlName="coefDepreciacion"
+          placeholder="Coeficiente de Depreciación"
           autocomplete="off"
-          [ngClass]="{'is-invalid': crearBienForm.controls['valorIncorporacion'].invalid}"
+          [ngClass]="{'is-invalid': cargarCoefForm.controls['coefDepreciacion'].invalid}"
         />
         <ng-container
           [ngTemplateOutlet]="formError"
           [ngTemplateOutletContext]="{
             validation: 'required',
-            message: 'El valor de incorporación del bien es requerido',
-            control: crearBienForm.controls['valorIncorporacion']
+            message: 'El coeficiente de depreciación del bien es requerido',
+            control: cargarCoefForm.controls['coefDepreciacion']
           }">
         </ng-container>
       </div>
       <!--end::Form group-->
-    </div>
-    <div class="col-md">
-      <!--begin::Form group-->
-      <div class="form-group" style="margin-left: 10px;">
-        <label class="font-size-h6 font-weight-bolder text-dark">Fecha de Incorporación</label>
-        <input
-          class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
-          type="date"
-          min="0"
-          name="fechaIncorporacion"
-          formControlName="fechaIncorporacion"
-          placeholder="Fecha de Incorporación"
-          autocomplete="off"
-          [ngClass]="{'is-invalid': crearBienForm.controls['fechaIncorporacion'].invalid}"
-        />
-        <ng-container
-          [ngTemplateOutlet]="formError"
-          [ngTemplateOutletContext]="{
-            validation: 'required',
-            message: 'La fecha de incorporación del bien es requerida',
-            control: crearBienForm.controls['fechaIncorporacion']
-          }">
-        </ng-container>
-      </div>
-      <!--end::Form group-->
-    </div>
-    </div>
-    <!--end::row-->
-    <hr style="border:2px groove solid">
-    <fieldset>
-      <legend>Asignación:</legend>
-    <div class="row">
-      <div class="col-md">
-        
-        <div class="form-group" style="margin-left: 10px;">
-          <label class="font-size-h6 font-weight-bolder text-dark pt-5">Unidad</label>
-          <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" 
-          data-live-search="true" formControlName="unidad" (change)="getUsuariosUnidad($event)">
-            <option *ngFor="let unidad of unidadesDrop" [value]="unidad.value">
-                {{unidad.label}}
-            </option>
-          </select>
-        </div>
       </div>
       <div class="col-md">
-        <div class="form-group" style="margin-left: 10px;">
-          <label class="font-size-h6 font-weight-bolder text-dark pt-5">Usuario Responsable</label>
-          <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" data-live-search="true" formControlName="usuarioResponsable">
-            <option *ngFor="let usuario of usuariosDrop" [value]="usuario.value">
-                {{usuario.label}}
-            </option>
-          </select>
-        </div>
+
       </div>
-    </div>
-    <!--end::row-->
-  </fieldset>
+      </div>
+      <!--end::row-->
+    
      <!--begin::Form group-->
       <!--Condicion en boton Aceptar [disabled]="registrationForm.invalid || !registrationForm.controls['agree'].value"-->
-      <!--<div class="form-group d-flex flex-wrap pb-lg-0 pb-3">
+      <div class="form-group d-flex flex-wrap pb-lg-0 pb-3">
         <button
           type="submit"
           id="kt_login_signup_submit"
-          [disabled]="crearBienForm.invalid"
+          [disabled]="cargarCoefForm.invalid"
           class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4">
           Guardar
         </button>
@@ -239,11 +127,11 @@
         <ng-container *ngIf="isLoading$ | async">
           <span class="spinner spinner-primary ml-5"></span>
         </ng-container>
-      </div>-->
+      </div>
       <!--end::Form group-->
     </form>
     <!--end::Form-->
-    </mat-tab>
+   
     <!--<mat-tab label="Asignación">
       <form
       class="form"
@@ -348,39 +236,6 @@
       </div>
       </form>
     </mat-tab>-->
-    <mat-tab label="Datos adicionales">
-      <form
-      class="form"
-      novalidate="novalidate"
-      id="kt_login_signup_form"
-      [formGroup]="adicionalForm"
-      (ngSubmit)="submit()"> 
-        <!--begin::Form group-->
-        <div class="form-group" style="margin-left: 10px;">
-          <label class="font-size-h6 font-weight-bolder text-dark">Fecha de mantenimiento</label>
-          <input
-            class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
-            type="date"
-            min="0"
-            name="fechaMantenimiento"
-            formControlName="fechaMantenimiento"
-            placeholder="Fecha de Mantenimiento"
-            autocomplete="off"
-            [ngClass]="{'is-invalid': adicionalForm.controls['fechaMantenimiento'].invalid}"
-          />
-          <ng-container
-            [ngTemplateOutlet]="formError"
-            [ngTemplateOutletContext]="{
-              validation: 'required',
-              message: 'La fecha de incorporación del bien es requerida',
-              control: adicionalForm.controls['fechaMantenimiento']
-            }">
-          </ng-container>
-        </div>
-        <!--end::Form group-->
-      </form>
-  </mat-tab>
-  </mat-tab-group>
   </div>
   <!--end container-->
 <!--begin::Signup-->

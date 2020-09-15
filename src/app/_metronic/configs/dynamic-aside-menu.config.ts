@@ -35,10 +35,6 @@ export const DynamicAsideMenuConfig = {
           page: 'bienes'
         },
         {
-          title: 'Ficha del Bien',
-          page: '/bienes/ficha'
-        },
-        {
           title: 'Ubicación',
           page: '/bienes/ubicacion'
         },
@@ -62,7 +58,7 @@ export const DynamicAsideMenuConfig = {
       submenu: [
         {
           title: 'Coeficiente de depreciación',
-          page: '/user-management/roles'
+          page: '/contabilidad/coeficiente'
         }
       ]
     },

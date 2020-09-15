@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Observable, BehaviorSubject, of, Subscription } from 'rxjs';
-import { map, catchError, switchMap, finalize } from 'rxjs/operators';
+import { map, catchError, switchMap, finalize, retry } from 'rxjs/operators';
 //import { UserModel } from '../_models/user.model';
 //import { AuthModel } from '../_models/auth.model';
 import { AuthHTTPService } from '../../modules/auth/_services/auth-http';
@@ -19,7 +19,7 @@ import { ContablesTabla } from '../../util/contables-tabla';
 @Injectable({
   providedIn: 'root',
 })
-export class BienesService implements OnDestroy {
+export class ContabilidadService implements OnDestroy {
   // private fields
   private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
   private isLoadingSubject: BehaviorSubject<boolean>;
@@ -38,8 +38,8 @@ export class BienesService implements OnDestroy {
     private authHttpService: AuthHTTPService,
     private router: Router
   ) {
-    /*this.isLoadingSubject = new BehaviorSubject<boolean>(false);
-    this.currentUserSubject = new BehaviorSubject<UserModel>(undefined);
+    this.isLoadingSubject = new BehaviorSubject<boolean>(false);
+    /*this.currentUserSubject = new BehaviorSubject<UserModel>(undefined);
     this.currentUser$ = this.currentUserSubject.asObservable();
     this.isLoading$ = this.isLoadingSubject.asObservable();
     const subscr = this.getUserByToken().subscribe();
@@ -47,31 +47,37 @@ export class BienesService implements OnDestroy {
   }
 
   // public methods
-  getAllCategorias(): Observable<CategoriasTabla>{
-    const auth = this.getAuthFromLocalStorage(); 
-    return this.authHttpService.getAllCategorias(auth.access_token).pipe(
-      map((categorias: CategoriasTabla) => {
-        return categorias;
-      }),
-      );
-  }
+  guardarCoefDepreciacion(coefDepreciacion:number):Observable<any>{
+    const auth = this.getAuthFromLocalStorage();
+    //var mensaje = '';
+    this.isLoadingSubject.next(true);
+    return this.authHttpService.guardarCoefDepreciacion(auth.access_token, coefDepreciacion).pipe(
+      retry(1),
+      catchError((err) => {
+        //console.error('err', err);
+        let error = new Error();
+        if(!err.error.apierror.formatted){
+          error.message = err.error.apierror.message;
+        }else{
+          error.message = "Ha ocurrido un error. Contacte al administrador."
+        }
+        //return mensaje;
+        return of(error);
+      })
+      ,finalize(() => this.isLoadingSubject.next(false))
+    );
 
-  getAllTiposBien(): Observable<TiposTabla>{
-    const auth = this.getAuthFromLocalStorage(); 
-    return this.authHttpService.getAllTiposBien(auth.access_token).pipe(
-      map((tipos: TiposTabla) => {
-        return tipos;
-      }),
-      );
-  }
-
-  getAllCategoriasHijas(idPadre): Observable<SubCategoriasTabla>{
-    const auth = this.getAuthFromLocalStorage(); 
-    return this.authHttpService.getAllCategoriasHijas(auth.access_token, idPadre).pipe(
-      map((categorias: SubCategoriasTabla) => {
-        return categorias;
-      }),
-      );
+    /*this.authHttpService.guardarCoefDepreciacion(auth.refresh_token, coefDepreciacion).subscribe(response => {
+      mensaje = 'Se ha guardado correctamente el coeficiente.';
+    }, err => {
+      //console.log(err);
+      //let error = new Error();
+        if(!err.error.apierror.formatted){
+          mensaje = err.error.apierror.message;
+        }else{
+          mensaje = "Ha ocurrido un error. Contacte al administrador."
+        }
+    });*/
   }
 
   getAllBienes(): Observable<BienesTabla>{

@@ -20,6 +20,12 @@ const routes: Routes = [
       },
 
       {
+        path: 'contabilidad',
+        loadChildren: () =>
+          import('./contabilidad/contabilidad.module').then((m) => m.ContabilidadModule),
+      },
+
+      {
         path: 'usuarios',
         loadChildren: () =>
           import('./usuarios/usuarios.module').then((m) => m.UsuariosModule),

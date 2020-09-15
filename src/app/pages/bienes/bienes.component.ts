@@ -6,7 +6,7 @@ import { TipoBienModel } from './model/tipo-bien.model';
 import { CategoriaModel } from './model/categoria.model';
 import { UnidadModel } from './model/unidad.model';
 import { Router, NavigationEnd } from '@angular/router';
-import { DetalleBienComponent } from './detalle-bien/detalle-bien.component';
+import { VerBienComponent } from './ver-bien/ver-bien.component';
 import { MatDialog } from '@angular/material/dialog';
 
 
@@ -39,7 +39,7 @@ export class BienesComponent implements OnInit {
     router.events.subscribe((event) => {
       if(event instanceof NavigationEnd) {
         if(this.router.getCurrentNavigation().extras.state !== undefined){
-          console.log(event.url);
+          //console.log(event.url);
           this.nuevoBien = this.router.getCurrentNavigation().extras.state.bien;
           this.bandera = true;
         }
@@ -59,7 +59,6 @@ export class BienesComponent implements OnInit {
         localStorage.setItem(cantNro+'', JSON.stringify(this.nuevoBien));
     }
   }*/
-
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
@@ -86,8 +85,10 @@ export class BienesComponent implements OnInit {
     });
   }
 
-  verDetalle(id, detalle){
-    const dialogRef = this.dialog.open(DetalleBienComponent, { data: {id: id, detalle: detalle} ,height: '350px', width: '450px'});
+  verBien(bien){
+    //const dialogRef = this.dialog.open(DetalleBienComponent, { data: {id: id, detalle: detalle} ,height: '350px', width: '450px'});
+    //console.log(bien);
+    this.router.navigate(['/bienes/ver'],{ state: { bienP: bien } });
   }
 
 }

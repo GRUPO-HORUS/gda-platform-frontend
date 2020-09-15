@@ -18,6 +18,7 @@ import { AtributoValorBienDTO } from '../../../../util/atributo-valor-bien.dto';
 import { AtributosBien } from '../../../../util/atributos-bien';
 import { UnidadesTabla } from '../../../../util/unidades-tabla';
 import { UnidadModel } from '../../../../pages/ubicacion/model/unidad.model';
+import { ContablesTabla } from '../../../../util/contables-tabla';
 
 //const API_USERS_URL = `${environment.apiUrl}/users`;
 const API_USERS_URL = 'http://localhost:8081/api/v1';
@@ -79,6 +80,15 @@ export class AuthHTTPService {
     });
   }
 
+  guardarCoefDepreciacion(token, coefDepreciacion): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.post<any>(API_USERS_URL+'/bien/datoscontables/coeficiente/'+coefDepreciacion,null,{
+      headers: httpHeaders,
+    });
+  }
+
   //Recupera todos los usuarios existentes
   getAllUsers(token): Observable<UsuariosTabla> {
     const httpHeaders = new HttpHeaders({
@@ -103,6 +113,15 @@ export class AuthHTTPService {
       Authorization: `Bearer ${token}`,
     });
     return this.http.get<AtributosBien>(API_USERS_URL+'/bien/detalle/'+idBien, {
+      headers: httpHeaders,
+    });
+  }
+
+  getDatosContables(token): Observable<ContablesTabla> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.get<ContablesTabla>(API_USERS_URL+'/bien', {
       headers: httpHeaders,
     });
   }

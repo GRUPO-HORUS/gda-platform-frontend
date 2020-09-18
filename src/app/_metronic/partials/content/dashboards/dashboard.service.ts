@@ -3,24 +3,20 @@ import { Observable, BehaviorSubject, of, Subscription } from 'rxjs';
 import { map, catchError, switchMap, finalize } from 'rxjs/operators';
 //import { UserModel } from '../_models/user.model';
 //import { AuthModel } from '../_models/auth.model';
-import { AuthHTTPService } from '../../modules/auth/_services/auth-http';
+import { AuthHTTPService } from '../../../../modules/auth/_services/auth-http';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 //import { serialize } from 'v8';
-import { BienesTabla } from '../../util/bienes-tabla';
-import { CategoriasTabla } from '../../util/categorias-tabla';
-import { AuthModel } from '../../modules/auth/_models/auth.model';
-import { SubCategoriasTabla } from '../../util/subcategorias-tabla';
-import { TiposTabla } from '../../util/tipos-tabla';
-import { AtributoValorBienDTO } from '../../util/atributo-valor-bien.dto';
-import { AtributosBien } from '../../util/atributos-bien';
-import { ContablesTabla } from '../../util/contables-tabla';
-import { TrazaTabla } from '../../util/traza-tabla';
+import { CategoriasTabla } from '../../../../util/categorias-tabla';
+import { AuthModel } from '../../../../modules/auth/_models/auth.model';
+import { SubCategoriasTabla } from '../../../../util/subcategorias-tabla';
+import { TiposTabla } from '../../../../util/tipos-tabla';
+import { DashboardDTO } from '../../../../util/dashboard.dto';
 
 @Injectable({
   providedIn: 'root',
 })
-export class BienesService implements OnDestroy {
+export class DashboardService implements OnDestroy {
   // private fields
   private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
   private isLoadingSubject: BehaviorSubject<boolean>;
@@ -48,6 +44,15 @@ export class BienesService implements OnDestroy {
   }
 
   // public methods
+  getStatsDashboard(): Observable<DashboardDTO>{
+    const auth = this.getAuthFromLocalStorage(); 
+    return this.authHttpService.getStatsDashboard(auth.access_token).pipe(
+      map((stats: DashboardDTO) => {
+        return stats;
+      }),
+      );
+  }
+
   getAllCategorias(): Observable<CategoriasTabla>{
     const auth = this.getAuthFromLocalStorage(); 
     return this.authHttpService.getAllCategorias(auth.access_token).pipe(
@@ -71,42 +76,6 @@ export class BienesService implements OnDestroy {
     return this.authHttpService.getAllCategoriasHijas(auth.access_token, idPadre).pipe(
       map((categorias: SubCategoriasTabla) => {
         return categorias;
-      }),
-      );
-  }
-
-  getAllBienes(): Observable<BienesTabla>{
-    const auth = this.getAuthFromLocalStorage(); 
-    return this.authHttpService.getAllBienes(auth.access_token).pipe(
-      map((bienes: BienesTabla) => {
-        return bienes;
-      }),
-      );
-  }
-
-  getDetallesBien(idBien): Observable<AtributosBien>{
-    const auth = this.getAuthFromLocalStorage(); 
-    return this.authHttpService.getDetallesBien(auth.access_token, idBien).pipe(
-      map((bienes: AtributosBien) => {
-        return bienes;
-      }),
-    );
-  }
-
-  getTrazaBien(rotulado): Observable<TrazaTabla>{
-    const auth = this.getAuthFromLocalStorage(); 
-    return this.authHttpService.getTrazaBien(auth.access_token, rotulado).pipe(
-      map((bienes: TrazaTabla) => {
-        return bienes;
-      }),
-      );
-  }
-
-  getDatosContables(): Observable<ContablesTabla>{
-    const auth = this.getAuthFromLocalStorage(); 
-    return this.authHttpService.getDatosContables(auth.access_token).pipe(
-      map((bienes: ContablesTabla) => {
-        return bienes;
       }),
       );
   }

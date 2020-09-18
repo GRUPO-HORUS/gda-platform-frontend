@@ -354,30 +354,34 @@
       novalidate="novalidate"
       id="kt_login_signup_form"
       [formGroup]="adicionalForm"
-      (ngSubmit)="submit()"> 
+      (ngSubmit)="submit()">
+      <div class="row">
+      <div class="col-md">
         <!--begin::Form group-->
         <div class="form-group" style="margin-left: 10px;">
-          <label class="font-size-h6 font-weight-bolder text-dark">Fecha de mantenimiento</label>
+          <label class="font-size-h6 font-weight-bolder text-dark">Periodicidad de mantenimiento</label>
           <input
             class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
-            type="date"
-            min="0"
-            name="fechaMantenimiento"
-            formControlName="fechaMantenimiento"
-            placeholder="Fecha de Mantenimiento"
+            type="text"
+            name="periodoMantenimiento"
+            formControlName="periodoMantenimiento"
+            placeholder="Periodicidad de Mantenimiento"
             autocomplete="off"
-            [ngClass]="{'is-invalid': adicionalForm.controls['fechaMantenimiento'].invalid}"
+            [ngClass]="{'is-invalid': adicionalForm.controls['periodoMantenimiento'].invalid}"
           />
           <ng-container
             [ngTemplateOutlet]="formError"
             [ngTemplateOutletContext]="{
               validation: 'required',
-              message: 'La fecha de incorporación del bien es requerida',
-              control: adicionalForm.controls['fechaMantenimiento']
+              message: 'La fecha de mantenimiento del bien es requerida',
+              control: adicionalForm.controls['periodoMantenimiento']
             }">
           </ng-container>
         </div>
         <!--end::Form group-->
+      </div>
+      <div class="col-md"></div>
+    </div>
       </form>
   </mat-tab>
   </mat-tab-group>

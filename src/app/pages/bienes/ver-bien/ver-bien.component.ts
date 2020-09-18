@@ -22,7 +22,7 @@ export class VerBienComponent implements OnInit {
   basicoForm: FormGroup;
   asignacionForm: FormGroup;
   contableForm: FormGroup;
-  mantenimientoForm: FormGroup;
+  adicionalForm: FormGroup;
   bienVisualizado;
   length: number=10;
 
@@ -89,7 +89,7 @@ export class VerBienComponent implements OnInit {
       ], 
     });
 
-    this.mantenimientoForm = this.fb.group(
+    this.adicionalForm = this.fb.group(
     {
         fechaMantenimiento: [
           null

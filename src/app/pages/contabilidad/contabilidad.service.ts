@@ -26,10 +26,9 @@ export class ContabilidadService implements OnDestroy {
   private authLocalStorageToken = `${environment.appVersion}-${environment.USERDATA_KEY}`;
 
   // public fields
-  /*currentUser$: Observable<UserModel>;
-  isLoading$: Observable<boolean>;
+  /*isLoading$: Observable<boolean>;
+  currentUser$: Observable<UserModel>;
   currentUserSubject: BehaviorSubject<UserModel>;
-
   get currentUserValue(): UserModel {
     return this.currentUserSubject.value;
   }*/
@@ -38,8 +37,9 @@ export class ContabilidadService implements OnDestroy {
     private authHttpService: AuthHTTPService,
     private router: Router
   ) {
-    this.isLoadingSubject = new BehaviorSubject<boolean>(false);
-    /*this.currentUserSubject = new BehaviorSubject<UserModel>(undefined);
+    /*this.isLoadingSubject = new BehaviorSubject<boolean>(false);
+    this.isLoading$ = this.isLoadingSubject.asObservable();
+    this.currentUserSubject = new BehaviorSubject<UserModel>(undefined);
     this.currentUser$ = this.currentUserSubject.asObservable();
     this.isLoading$ = this.isLoadingSubject.asObservable();
     const subscr = this.getUserByToken().subscribe();
@@ -50,13 +50,13 @@ export class ContabilidadService implements OnDestroy {
   guardarCoefDepreciacion(coefDepreciacion:number):Observable<any>{
     const auth = this.getAuthFromLocalStorage();
     //var mensaje = '';
-    this.isLoadingSubject.next(true);
-    return this.authHttpService.guardarCoefDepreciacion(auth.access_token, coefDepreciacion).pipe(
-      retry(1),
-      catchError((err) => {
-        //console.error('err', err);
+    //this.isLoadingSubject.next(true);
+    return this.authHttpService.guardarCoefDepreciacion(auth.access_token, coefDepreciacion);/*.pipe(
+      retry(1)
+      ,catchError((err) => {
+        console.error('err', err);
         let error = new Error();
-        if(!err.error.apierror.formatted){
+        if(err.error.apierror.formatted){
           error.message = err.error.apierror.message;
         }else{
           error.message = "Ha ocurrido un error. Contacte al administrador."
@@ -65,19 +65,7 @@ export class ContabilidadService implements OnDestroy {
         return of(error);
       })
       ,finalize(() => this.isLoadingSubject.next(false))
-    );
-
-    /*this.authHttpService.guardarCoefDepreciacion(auth.refresh_token, coefDepreciacion).subscribe(response => {
-      mensaje = 'Se ha guardado correctamente el coeficiente.';
-    }, err => {
-      //console.log(err);
-      //let error = new Error();
-        if(!err.error.apierror.formatted){
-          mensaje = err.error.apierror.message;
-        }else{
-          mensaje = "Ha ocurrido un error. Contacte al administrador."
-        }
-    });*/
+    );*/
   }
 
   getAllBienes(): Observable<BienesTabla>{

@@ -1,21 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, Observable, of } from 'rxjs';
 import { AuthService } from '../../modules/auth/_services/auth.service';
 import { BienesService } from '../bienes/bienes.service';
 import { Router } from '@angular/router';
 import { BienModel } from '../bienes/model/bien.model';
 import { ContabilidadService } from './contabilidad.service';
 import { first } from 'rxjs/operators';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-cargar-coeficiente',
   templateUrl: './cargar-coeficiente.component.html',
   styleUrls: ['./cargar-coeficiente.component.scss']
 })
-export class CargarCoeficienteComponent implements OnInit {
+export class CargarCoeficienteComponent implements OnInit, OnDestroy {
   cargarCoefForm: FormGroup;
-  isLoading$: Observable<boolean>;
+  //isLoading$: Observable<boolean>;
   usuariosDrop: any[] = [];
   guardo: boolean;
 
@@ -24,17 +25,20 @@ export class CargarCoeficienteComponent implements OnInit {
   tiposBienDrop: any[] = [];
 
   unidadesDrop: any[] = [];
-
-  hoy: Date;
   tipoSelect: boolean= false;
 
   adicionalForm: FormGroup;
   unidadesD;
   msgFinal: string='';
+  error=false;
 
+  //isLoading$: Observable<boolean>;
   private unsubscribe: Subscription[] = [];
 
-  constructor(private authService: AuthService, private fb: FormBuilder, private bienesService: BienesService, private contabilidadService: ContabilidadService, private router: Router) { }
+  constructor(private authService: AuthService, private fb: FormBuilder, private bienesService: BienesService, 
+              private contabilidadService: ContabilidadService, private router: Router, private _snackBar: MatSnackBar) {
+      //this.isLoading$ = this.contabilidadService.isLoading$; 
+    }
 
   ngOnInit(): void {
     this.initForm();
@@ -47,25 +51,20 @@ export class CargarCoeficienteComponent implements OnInit {
   initForm() {
     this.guardo = false;
 
-    this.bienesService.getAllCategorias().subscribe(categorias => {
+    /*this.bienesService.getAllCategorias().subscribe(categorias => {
       let categoriasD = categorias.content;
       for (let i = 0; i < categoriasD.length; i++) {
           let c = categoriasD[i];
           this.categoriasDrop.push({ label: c.descripcion, value: c.id });
       }
     });
-
     this.bienesService.getAllTiposBien().subscribe(tipos => {
       let tiposD = tipos.content;
       for (let i = 0; i < tiposD.length; i++) {
           let t = tiposD[i];
           this.tiposBienDrop.push({ label: t.descripcion, value: t.id });
       }
-    });
-
-    let usu = this.authService.getUserFromLocalStorage();
-
-    this.hoy = new Date();
+    });*/
 
     this.cargarCoefForm = this.fb.group(
       {
@@ -83,14 +82,10 @@ export class CargarCoeficienteComponent implements OnInit {
           ]),
         ]
       },
-      /*{
-        validator: ConfirmPasswordValidator.MatchPassword,
-      }*/
     );
   }
 
-  getCategoriasHijas($event){
-    //console.log($event.target.value);
+  /*getCategoriasHijas($event){
     this.bienesService.getAllCategoriasHijas($event.target.value).subscribe(categorias => {
       let categoriasD = categorias.content;
       for (let i = 0; i < categoriasD.length; i++) {
@@ -100,30 +95,37 @@ export class CargarCoeficienteComponent implements OnInit {
           }
       }
     });
-  }
-
-  submit() {
+  }*/
+cargar() {
     this.guardo = true;
-
-    const result = {};
-    Object.keys(this.f).forEach(key => {
-      result[key] = this.f[key].value;
-    });
-    const nuevoBien = new BienModel();
-
     //pipe(first()).
-    const contabSubscr = this.contabilidadService.guardarCoefDepreciacion(this.cargarCoefForm.controls.coefDepreciacion.value).
-    subscribe(response =>{
-        if(response !== null){
+    this.contabilidadService.guardarCoefDepreciacion(this.cargarCoefForm.controls.coefDepreciacion.value).subscribe((response:any) =>{
+        /*if(response !== null){
+          this.error = true;
           this.msgFinal = response.message;
-          console.log(response.message);
-          
-        }else{
-          this.msgFinal = "Se ha guardado correctamente el coeficiente";
+        }*/
+        if(response == null){
+          this.error = false;
+          this.msgFinal = "Se ha guardado correctamente el coeficiente.";
+          this._snackBar.open(this.msgFinal,null, {
+            duration: 3500,
+          });
         }  
         
-      });
-      this.unsubscribe.push(contabSubscr);
+      },error=>{
+        //console.log(error.error.apierror.message);
+        this.msgFinal=error.error.apierror.message;
+        this.error=true;
+        this._snackBar.open(this.msgFinal,null, {
+          duration: 3500,
+        });
+        //this.unsubscribe.push(contabSub);
+        //return of(error);
+      }); 
+}
+
+  ngOnDestroy() {
+    this.unsubscribe.forEach((sb) => sb.unsubscribe());
   }
 
 }

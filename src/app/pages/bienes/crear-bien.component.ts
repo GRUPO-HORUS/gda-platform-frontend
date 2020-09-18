@@ -184,7 +184,7 @@ export class CrearBienComponent implements OnInit {
 
     this.adicionalForm = this.fb.group(
       {
-        fechaMantenimiento: [
+        periodoMantenimiento: [
           null
         ], 
       });

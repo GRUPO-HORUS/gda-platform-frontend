@@ -10,6 +10,8 @@ import {MatSelectModule} from '@angular/material/select';
 import { AsignarRolComponent } from './asignar-rol.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthGuard } from '../../modules/auth/_services/auth.guard';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 //import { DashboardsModule } from 'src/app/_metronic/partials/content/dashboards/dashboards.module';
 
 @NgModule({
@@ -19,6 +21,8 @@ import { AuthGuard } from '../../modules/auth/_services/auth.guard';
     MatPaginatorModule,
     MatDialogModule,
     MatSelectModule,
+    MatFormFieldModule,
+    MatInputModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

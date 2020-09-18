@@ -19,6 +19,7 @@ import { Widget3DropdownComponent } from './lists/lists-widget3/widget3-dropdown
 import { Widget4DropdownComponent } from './lists/lists-widget4/widget4-dropdown/widget4-dropdown.component';
 
 import { AdvanceTablesWidget6Component } from './advance-tables/advance-tables-widget6/advance-tables-widget6.component';
+import { MixedBienesComponent } from './mixed/mixed-bienes/mixed-bienes.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { AdvanceTablesWidget6Component } from './advance-tables/advance-tables-w
     Widget3DropdownComponent,
     Widget4DropdownComponent,
 
-    AdvanceTablesWidget6Component
+    AdvanceTablesWidget6Component,
+    MixedBienesComponent
   ],
   imports: [
     CommonModule,
@@ -58,7 +60,8 @@ import { AdvanceTablesWidget6Component } from './advance-tables/advance-tables-w
     AdvanceTablesWidget4Component,
     AdvanceTablesWidget2Component,
 
-    AdvanceTablesWidget6Component
+    AdvanceTablesWidget6Component,
+    MixedBienesComponent
   ],
 })
 export class WidgetsModule {}

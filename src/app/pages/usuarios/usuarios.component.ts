@@ -8,6 +8,7 @@ import { AsignarRolComponent } from './asignar-rol.component';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+//import { receiveMessageOnPort } from 'worker_threads';
 
 @Component({
   selector: 'app-usuarios',
@@ -40,8 +41,33 @@ export class UsuariosComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.length = usuarios.totalElements;
 
-      //console.log(usuarios);
+      this.dataSource.filterPredicate = (data: UserData, filter: string): boolean => {
+
+        const dataStr = Object.keys(data).reduce((currentTerm: string, key: string) => {
+          //return (currentTerm + (data as { [key: string]: any })[key] + '◬');
+
+          return key === 'roles' ? currentTerm + this.revisarRol(data) : currentTerm + data[key];
+
+        }, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  
+        const transformedFilter = filter.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  
+        return dataStr.indexOf(transformedFilter) != -1;
+      }
     });
+  }
+
+  revisarRol(data):string{
+    let cadena='';
+    for(let i =0;i<data.roles.length;i++){
+      console.log(data.roles[i].nombre);
+      cadena+=data.roles[i].nombre;
+    }
+    return cadena;
+  }
+
+  filtrar(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   asignarRoles(id){
@@ -50,6 +76,7 @@ export class UsuariosComponent implements OnInit {
 
     //this.modalService.open(this.modal);
   }
+
 }
 
 export interface UserData {

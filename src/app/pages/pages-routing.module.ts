@@ -26,6 +26,12 @@ const routes: Routes = [
       },
 
       {
+        path: 'bandeja',
+        loadChildren: () =>
+          import('./bandeja/bandeja.module').then((m) => m.BandejaModule),
+      },
+
+      {
         path: 'usuarios',
         loadChildren: () =>
           import('./usuarios/usuarios.module').then((m) => m.UsuariosModule),
@@ -66,8 +72,8 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: 'dashboard',
-        //redirectTo: 'bienes',
+        //redirectTo: 'dashboard',
+        redirectTo: 'bienes',
         pathMatch: 'full',
       },
       {

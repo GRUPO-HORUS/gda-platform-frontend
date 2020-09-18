@@ -1,22 +1,21 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { BienesService } from './bienes.service';
-import { TipoBienModel } from './model/tipo-bien.model';
-import { CategoriaModel } from './model/categoria.model';
-import { UnidadModel } from './model/unidad.model';
+import { BienesService } from '../bienes/bienes.service';
+import { CategoriaModel } from '../bienes/model/categoria.model';
+import { UnidadModel } from '../bienes/model/unidad.model';
 import { Router, NavigationEnd } from '@angular/router';
-import { VerBienComponent } from './ver-bien/ver-bien.component';
+import { VerBienComponent } from '../bienes/ver-bien/ver-bien.component';
 import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
-  selector: 'app-bienes',
-  templateUrl: './bienes.component.html',
-  styleUrls: ['./bienes.component.scss']
+  selector: 'app-bandeja',
+  templateUrl: './bandeja.component.html',
+  styleUrls: ['./bandeja.component.scss']
 })
-export class BienesComponent implements OnInit {
-  displayedColumns: string[] = [ 'rotulado', 'fechaIncorporacion', 'valorIncorporacion','gdaCategoriaBienId', 'gdaUnidadUbicacionId','acciones'];
+export class BandejaComponent implements OnInit {
+  displayedColumns: string[] = [ 'remitente', 'asunto', 'fechaIncorporacion','acciones'];
   //'detalle', 'gdaCategoriaBienId', 'gdaTipoBien'
   dataSource;
   length: number=10;
@@ -24,7 +23,6 @@ export class BienesComponent implements OnInit {
 
   nuevoBien;
   nuevoBien2;
-
   cantNuevos;
 
   constructor(private bienesService: BienesService, private router: Router, private dialog: MatDialog) {
@@ -35,16 +33,6 @@ export class BienesComponent implements OnInit {
         //this.nuevoBien2 = localStorage.getItem(this.nuevoBien.id);
         localStorage.setItem(this.nuevoBien.id, JSON.stringify(this.nuevoBien));
     }*/
-    //location.subscribe(val => console.log(val));
-    router.events.subscribe((event) => {
-      if(event instanceof NavigationEnd) {
-        if(this.router.getCurrentNavigation().extras.state !== undefined){
-          //console.log(event.url);
-          this.nuevoBien = this.router.getCurrentNavigation().extras.state.bien;
-          this.bandera = true;
-        }
-      }
-    });
     
   }
 
@@ -66,47 +54,20 @@ export class BienesComponent implements OnInit {
     //this.dataSource = new MatTableDataSource<BienData>(BIEN_DATA);
     
     this.bienesService.getAllBienes().subscribe(bienes => {
-      //let bienesA = bienes.content;
       /*bienes.content.push({id:2, rotulado: '0000-0001-002', detalle: 'Monitor Samsung', fechaIncorporacion: new Date(), valorIncorporacion: 700000, 
       gdaCategoriaBienId:{id:'7fdfbc99-a168-4f31-b794-a7d7ac02bd00', descripcion: 'UNIDAD CENTRAL DE PROCESAMIENTO (CPU)'}, gdaUnidadUbicacionId:{id:'7fdfbc99-a168-4f31-b794-a7d7ac02bd00', nombre: 'Gestión de Proyectos'}});*/
-
-      if(this.bandera){
-        this.length = bienes.totalElements+1;
-        //this.nuevoBien2 = JSON.parse(localStorage.getItem(this.nuevoBien.id));
-        bienes.content.push(this.nuevoBien);
-      }else{
-        this.length = bienes.totalElements;
-      }
-
+      
+      //this.nuevoBien2 = JSON.parse(localStorage.getItem(this.nuevoBien.id));
       this.dataSource = new MatTableDataSource<BienData>(bienes.content);
       this.dataSource.paginator = this.paginator;
       this.length =bienes.totalElements;
-
-      this.dataSource.filterPredicate = (data: BienData, filter: string): boolean => {
-
-        const dataStr = Object.keys(data).reduce((currentTerm: string, key: string) => {
-          //return (currentTerm + (data as { [key: string]: any })[key] + '◬');
-
-          return key === 'gdaCategoriaBienId' ? currentTerm + data.gdaCategoriaBienId.descripcion : key === 'gdaUnidadUbicacionId' ? currentTerm + data.gdaUnidadUbicacionId.nombre : currentTerm + data[key];
-
-        }, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-  
-        const transformedFilter = filter.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-  
-        return dataStr.indexOf(transformedFilter) != -1;
-      }
       
     });
   }
 
   verBien(bien){
     //const dialogRef = this.dialog.open(DetalleBienComponent, { data: {id: id, detalle: detalle} ,height: '350px', width: '450px'});
-    //console.log(bien);
     this.router.navigate(['/bienes/ver'],{ state: { bienP: bien } });
-  }
-
-  filtrar(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
 }
@@ -119,7 +80,6 @@ export interface BienData {
   valorIncorporacion: number;
   gdaCategoriaBienId: CategoriaModel;
   gdaUnidadUbicacionId: UnidadModel;
-  //gdaTipoBien: TipoBienModel;          //TipoBienModel
 
   /*setBien(bien: any) {
     this.id = '';

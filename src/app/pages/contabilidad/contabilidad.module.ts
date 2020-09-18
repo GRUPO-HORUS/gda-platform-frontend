@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
@@ -23,6 +24,7 @@ registerLocaleData(es);
     MatPaginatorModule,
     MatDialogModule,
     MatTabsModule,
+    MatSnackBarModule,
     CommonModule,
     RouterModule.forChild([
       {

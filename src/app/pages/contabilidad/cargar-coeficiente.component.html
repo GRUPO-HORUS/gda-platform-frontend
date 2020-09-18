@@ -36,19 +36,25 @@
         </div>
       </ng-container >
         
-      <ng-container *ngIf="guardo">
+      <!--<ng-container *ngIf="guardo && !error">
         <div class="mb-10 alert alert-custom alert-light-bien alert-dismissible">
           <div class="alert-text">
             {{msgFinal}}
           </div>
         </div>
       </ng-container>
+      <ng-container *ngIf="guardo && error">
+        <div class="mb-10 alert alert-custom alert-light-danger alert-dismissible">
+          <div class="alert-text">
+            {{msgFinal}}
+          </div>
+        </div>
+      </ng-container>-->
       <!--begin::Form-->
       <form class="form"
       novalidate="novalidate"
       id="kt_login_signup_form"
-      [formGroup]="cargarCoefForm"
-      (ngSubmit)="submit()"> 
+      [formGroup]="cargarCoefForm"> 
       <!--<div class="row">
         <div class="col-md">
           <div class="form-group" style="margin-left: 10px;">
@@ -71,7 +77,6 @@
               </option>
             </select>
           </div>
-        
         </div>
       </div>-->
       <!--end::row-->
@@ -112,10 +117,10 @@
       <!--Condicion en boton Aceptar [disabled]="registrationForm.invalid || !registrationForm.controls['agree'].value"-->
       <div class="form-group d-flex flex-wrap pb-lg-0 pb-3">
         <button
-          type="submit"
+          type="button"
           id="kt_login_signup_submit"
           [disabled]="cargarCoefForm.invalid"
-          class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4">
+          class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4" (click)="cargar()">
           Guardar
         </button>
         <a routerLink="/bienes"
@@ -124,118 +129,13 @@
           class="btn btn-light-primary font-weight-bolder font-size-h6 px-8 py-4 my-3">
           Cancelar
         </a>
-        <ng-container *ngIf="isLoading$ | async">
+        <!--<ng-container *ngIf="isLoading$ | async">
           <span class="spinner spinner-primary ml-5"></span>
-        </ng-container>
+        </ng-container>-->
       </div>
       <!--end::Form group-->
     </form>
     <!--end::Form-->
-   
-    <!--<mat-tab label="Asignación">
-      <form
-      class="form"
-      novalidate="novalidate"
-      id="kt_login_signup_form"
-      [formGroup]="asignacionForm"
-      (ngSubmit)="submit()">
-
-       <div class="form-group" style="margin-left: 10px;">
-        <label class="font-size-h6 font-weight-bolder text-dark pt-5">Unidad</label>
-        <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" 
-        data-live-search="true" formControlName="unidad" (change)="getUsuariosUnidad($event)">
-          <option *ngFor="let unidad of unidadesDrop" [value]="unidad.value">
-              {{unidad.label}}
-          </option>
-        </select>
-      </div>
-      
-      <div class="form-group" style="margin-left: 10px;">
-        <label class="font-size-h6 font-weight-bolder text-dark pt-5">Usuario Responsable</label>
-        <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" data-live-search="true" formControlName="usuarioResponsable">
-          <option *ngFor="let usuario of usuariosDrop" [value]="usuario.value">
-              {{usuario.label}}
-          </option>
-        </select>
-      </div>
-      </form>
-    </mat-tab>-->
-    <!--<mat-tab label="Datos Contables">
-      <form class="form"
-          novalidate="novalidate"
-          id="kt_login_signup_form"
-          [formGroup]="contableForm"
-          (ngSubmit)="submit()"> 
-      <div class="row">
-        <div class="col-md">
-          
-          <div class="form-group" style="margin-left: 10px;">
-            <label class="font-size-h6 font-weight-bolder text-dark">Valor de Revaluo</label>
-            <input
-              class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
-              type="number"
-              min="0"
-              name="valorRevaluo"
-              formControlName="valorRevaluo"
-              placeholder="Valor de Revaluo"
-              autocomplete="off"
-            />
-          </div>
-          
-        </div>
-      <div class="col-md">
-      <div class="form-group" style="margin-left: 10px;">
-        <label class="font-size-h6 font-weight-bolder text-dark">Valor de Depreciación</label>
-        <input
-          class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
-          type="number"
-          min="0"
-          name="valorDepreciacion"
-          formControlName="valorDepreciacion"
-          placeholder="Valor de Depreciación"
-          autocomplete="off"
-        />
-      </div>
-      
-      </div>
-      </div>
-      
-      <div class="row">
-        <div class="col-md">
-           
-            <div class="form-group" style="margin-left: 10px;">
-              <label class="font-size-h6 font-weight-bolder text-dark">Coeficiente de Depreciación</label>
-              <input
-                class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
-                type="number"
-                min="0"
-                name="coeficienteDepreciacion"
-                formControlName="coeficienteDepreciacion"
-                placeholder="Coeficiente de Depreciación"
-                autocomplete="off"
-              />
-            </div>
-            
-        </div>
-        <div class="col-md">
-          
-      <div class="form-group" style="margin-left: 10px;">
-        <label class="font-size-h6 font-weight-bolder text-dark">Valor Neto Fiscal</label>
-        <input
-          class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
-          type="number"
-          min="0"
-          name="valorNeto"
-          formControlName="valorNeto"
-          placeholder="Valor Neto Fiscal"
-          autocomplete="off"
-        />
-      </div>
-      
-        </div>
-      </div>
-      </form>
-    </mat-tab>-->
   </div>
   <!--end container-->
 <!--begin::Signup-->

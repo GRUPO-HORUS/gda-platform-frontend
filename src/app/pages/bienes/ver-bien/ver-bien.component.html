@@ -194,64 +194,34 @@
     </form>
     <!--end::Form-->
     </mat-tab>
-    <!--<mat-tab label="Asignación">
+    <mat-tab label="Datos Adicionales">
       <form
       class="form"
       novalidate="novalidate"
       id="kt_login_signup_form"
-      [formGroup]="asignacionForm">
+      [formGroup]="adicionalForm">
 
-       <div class="form-group" style="margin-left: 10px;">
-        <label class="font-size-h6 font-weight-bolder text-dark pt-5">Unidad</label>
-       
-        <input
-            class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
-            type="text"
-            name="unidad"
-            formControlName="unidad"
-            placeholder="Unidad"
-            autocomplete="off" readonly/>
-      </div>
-      <div class="form-group" style="margin-left: 10px;">
-        <label class="font-size-h6 font-weight-bolder text-dark pt-5">Usuario Responsable</label>
-       
-        <input
-            class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
-            type="text"
-            name="usuarioResponsable"
-            formControlName="usuarioResponsable"
-            placeholder="Usuario Responsable"
-            autocomplete="off" readonly/>
-      </div>
+      
       </form>
-    </mat-tab>-->
-    <mat-tab label="Datos Contables">
+    </mat-tab>
+    <!--<mat-tab label="Datos Contables">
       <table mat-table [dataSource]="dataSource">
-        <!-- Detalle Column 
-        <ng-container matColumnDef="detalle">
-          <th mat-header-cell *matHeaderCellDef style="width: 250px;"> Detalle </th>
-          <td mat-cell *matCellDef="let element" style="width: 250px;"> {{element.detalle}} </td>
-        </ng-container>-->
 
-        <!-- Año Column -->
         <ng-container matColumnDef="anno">
           <th mat-header-cell *matHeaderCellDef> Año </th>
           <td mat-cell *matCellDef="let element"> {{element.anno}} </td>
         </ng-container>
-
-        <!-- Valor de Revaluo Column-->
+   
         <ng-container matColumnDef="valorRevaluo">
           <th mat-header-cell *matHeaderCellDef> Valor de Revaluo </th>
           <td mat-cell *matCellDef="let element"> {{element.valorRevaluo}} </td>
         </ng-container>
 
-        <!-- Valor de Depreciación Column-->
         <ng-container matColumnDef="valorDepreciacion">
           <th mat-header-cell *matHeaderCellDef> Valor de Depreciación </th>
           <td mat-cell *matCellDef="let element"> {{element.valorDepreciacion}} </td>
         </ng-container>
 
-        <!-- Valor Neto Fiscal Column-->
         <ng-container matColumnDef="valorNetoFiscal">
           <th mat-header-cell *matHeaderCellDef> Valor Neto Fiscal </th>
           <td mat-cell *matCellDef="let element"> {{element.valorNetoFiscal}} </td>
@@ -260,7 +230,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
-    </mat-tab>
+    </mat-tab>-->
     <!--<mat-tab label="Mantenimiento">
       <form
       class="form"

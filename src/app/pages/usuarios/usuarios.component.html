@@ -22,6 +22,10 @@
 
   <!--begin::Body-->
   <div class="card-body pt-0 pb-3">
+    <span class="navi-icon"><mat-form-field style="width: 400px;">
+      <input matInput (keyup)="filtrar($event.target.value)" placeholder="Filtro por nombre, apellidos, cédula, email o roles">
+    </mat-form-field>
+    <i class="flaticon2-search"></i></span>
     <div class="tab-content">
       <!--begin::Table-->
       <table mat-table [dataSource]="dataSource">

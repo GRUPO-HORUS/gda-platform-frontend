@@ -200,8 +200,38 @@
       novalidate="novalidate"
       id="kt_login_signup_form"
       [formGroup]="adicionalForm">
-
-      
+      <div class="row">
+        <div class="col-md">
+          <!--begin::Form group formControlName="fechaIncorporacion"-->
+          <div class="form-group" style="margin-left: 10px;">
+            <label class="font-size-h6 font-weight-bolder text-dark">Fecha de último mantenimiento</label>
+            <input
+              class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
+              type="text"
+              min="0"
+              name="fechaIncorporacion"
+              value="{{bienVisualizado.fechaIncorporacion | date:'dd/MM/yyyy'}}"
+              placeholder="Fecha de Incorporación"
+              autocomplete="off" readonly/>
+          </div>
+          <!--end::Form group-->
+        </div>
+        <div class="col-md">
+          <!--begin::Form group formControlName="fechaIncorporacion"-->
+          <div class="form-group" style="margin-left: 10px;">
+            <label class="font-size-h6 font-weight-bolder text-dark">Periodicidad del mantenimiento</label>
+            <input
+              class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
+              type="text"
+              min="0"
+              name="fechaIncorporacion"
+              value="15 días"
+              placeholder="Fecha de Incorporación"
+              autocomplete="off" readonly/>
+          </div>
+          <!--end::Form group-->
+        </div>
+      </div>
       </form>
     </mat-tab>
     <!--<mat-tab label="Datos Contables">

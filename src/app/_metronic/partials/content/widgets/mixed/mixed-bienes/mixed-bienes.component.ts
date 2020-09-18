@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LayoutService } from '../../../../../core';
 import { DashboardService } from '../../../dashboards/dashboard.service';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-mixed-bienes',
@@ -19,7 +20,7 @@ export class MixedBienesComponent implements OnInit {
   pendientesAprobacion:number=0;
   recordatoriosProx:number=0;
 
-  constructor(private layout: LayoutService, private dashboardService: DashboardService) {
+  constructor(private layout: LayoutService, private dashboardService: DashboardService, private router: Router) {
     this.fontFamily = this.layout.getProp('js.fontFamily');
     this.colorsGrayGray500 = this.layout.getProp('js.colors.gray.gray500');
     this.colorsGrayGray200 = this.layout.getProp('js.colors.gray.gray200');
@@ -35,7 +36,7 @@ export class MixedBienesComponent implements OnInit {
       this.totalBienes = stats.totalElementos;
       this.pendientesEtiqueta = stats.pendientesEtiquetado;
       this.pendientesAprobacion = stats.pendientesAprobacion;
-      console.log(this.totalBienes);
+      //console.log(this.totalBienes);
     });
   }
 

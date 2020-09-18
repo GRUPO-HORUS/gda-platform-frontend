@@ -72,8 +72,8 @@ const routes: Routes = [
       },
       {
         path: '',
-        //redirectTo: 'dashboard',
-        redirectTo: 'bienes',
+        redirectTo: 'dashboard',
+        //redirectTo: 'bienes',
         pathMatch: 'full',
       },
       {

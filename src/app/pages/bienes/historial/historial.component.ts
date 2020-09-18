@@ -97,14 +97,24 @@ export class HistorialComponent implements OnInit {
 
   submit(){
     //console.log(this.buscarForm.controls.rotulado.value);
+    this.msgFinal='';
     this.nombreBien = '';
+    this.dataSource = null;
     this.bienesService.getTrazaBien(this.buscarForm.controls.rotulado.value).subscribe(bienes => {
       
-      this.dataSource = new MatTableDataSource<BienData>(bienes.content);
-      this.dataSource.paginator = this.paginator;
-      this.length =bienes.totalElements;
+      if(bienes.totalElements > 0){
+        this.dataSource = new MatTableDataSource<BienData>(bienes.content);
+        this.dataSource.paginator = this.paginator;
+        this.length =bienes.totalElements;
 
-      this.nombreBien = bienes.content[0].gdaBienId.detalle;
+        this.nombreBien = bienes.content[0].gdaBienId.detalle;
+      }else{
+        this.msgFinal='Este bien no cuenta con una traza.';
+        this._snackBar.open(this.msgFinal,null, {
+          duration: 3500,
+        });
+      }
+      
 
       this.dataSource.filterPredicate = (data: BienData, filter: string): boolean => {
         const dataStr = Object.keys(data).reduce((currentTerm: string, key: string) => {
@@ -120,12 +130,11 @@ export class HistorialComponent implements OnInit {
 
     },error=>{
       //console.log(error.error.apierror.message);
-      
+      this.dataSource = null;
       this.msgFinal=error.error.apierror.message;
       this._snackBar.open(this.msgFinal,null, {
         duration: 3500,
       });
-      //this.dataSource = new MatTableDataSource<BienData>(BIEN_DATA);
     });
   }
 

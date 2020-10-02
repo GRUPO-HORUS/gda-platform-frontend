@@ -5,24 +5,17 @@
     <ng-container *ngIf="guardo">
       <div class="mb-10 alert alert-custom alert-light-bien alert-dismissible">
         <div class="alert-text">
-          Se ha guardado correctamente el bien.
+          Se ha editado correctamente el bien.
         </div>
       </div>
     </ng-container>
     <!-- end::Alert info-->
   
-    <!-- begin::Alert error-->
-    <!--<ng-container *ngIf="hasError">
-        <div class="mb-10 alert alert-custom alert-light-danger alert-dismissible">
-          <div class="alert-text">{{errorMsg}}</div>
-        </div>
-    </ng-container>-->
-    <!-- end::Alert error-->
     <!--begin::Title-->
     <div class="card-header border-0 py-5">
     <!--<div class="pb-13 pt-lg-0 pt-5" style="margin-left: 50px;">-->
       <h3 class="card-title align-items-start flex-column"><!--font-weight-bolder text-dark font-size-h4 font-size-h1-lg-->
-        <span class="card-label font-weight-bolder text-dark" style="font-size: 1.275rem !important">Registro del Bien</span>
+        <span class="card-label font-weight-bolder text-dark" style="font-size: 1.275rem !important">Edición del Bien: {{bienVisualizado.rotulado}}</span>
       </h3>
       <!--<p class="text-muted font-weight-bold font-size-h4">Complete los datos requeridos para crear el bien.</p>-->
     </div>
@@ -32,7 +25,7 @@
       <button
       type="button"
       id="kt_login_signup_submit"
-      [disabled]="crearBienForm.invalid"
+      [disabled]="basicoForm.invalid"
       class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4"
       (click)="submit()">
       Guardar
@@ -52,16 +45,16 @@
       class="form"
       novalidate="novalidate"
       id="kt_login_signup_form"
-      [formGroup]="crearBienForm"
+      [formGroup]="basicoForm"
       (ngSubmit)="submit()"> 
       <div class="row">
         <div class="col-md">
-          <!--begin::Form group-->
+          <!--begin::Form group [(ngModel)]="bienVisualizado.gdaBienTipo.id"-->
           <div class="form-group" style="margin-left: 10px;">
             <label class="font-size-h6 font-weight-bolder text-dark pt-5">Tipo</label>
             <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" 
-            data-live-search="true" formControlName="tipo" 
-            [ngClass]="{'is-invalid': crearBienForm.controls['tipo'].invalid}">
+            data-live-search="true" formControlName="tipo"
+            [ngClass]="{'is-invalid': basicoForm.controls['tipo'].invalid}">
               <option *ngFor="let tipo of tiposBienDrop" [value]="tipo.value">
                   {{tipo.label}}
               </option>
@@ -74,8 +67,8 @@
           <div class="form-group" style="margin-left: 10px;">
             <label class="font-size-h6 font-weight-bolder text-dark pt-5">Categoría</label>
             <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" 
-            data-live-search="true" formControlName="categoria" (change)="getCategoriasHijas($event)"
-            [ngClass]="{'is-invalid': crearBienForm.controls['categoria'].invalid}">
+            data-live-search="true" formControlName="categoria" (change)="getHijasAlCambiar($event)"
+            [ngClass]="{'is-invalid': basicoForm.controls['categoria'].invalid}">
               <!--<option>
                 Seleccione
               </option>-->
@@ -94,7 +87,7 @@
           <div class="form-group" style="margin-left: 10px;">
             <label class="font-size-h6 font-weight-bolder text-dark pt-5">Sub Categoría</label>
             <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" 
-            data-live-search="true" formControlName="{{hija.nombre}}" (change)="getCategoriasHijas($event)">
+            data-live-search="true" formControlName="{{hija.nombre}}" (change)="getHijasAlCambiar($event)">
               <option *ngFor="let subcategoria of hija.subcategorias" [value]="subcategoria.value">
                   {{subcategoria.label}}
               </option>
@@ -120,13 +113,13 @@
             placeholder="Detalle"
             autocomplete="off"
             [ngClass]="{'is-invalid': crearBienForm.controls['detalle'].invalid}"/>-->
-          <textarea type="text" id="form7" rows="8" class="form-control form-control-solid" formControlName="detalle" [ngClass]="{'is-invalid': crearBienForm.controls['detalle'].invalid}"></textarea>
+          <textarea type="text" id="form7" rows="8" class="form-control form-control-solid" formControlName="detalle" [ngClass]="{'is-invalid': basicoForm.controls['detalle'].invalid}"></textarea>
           <ng-container
             [ngTemplateOutlet]="formError"
             [ngTemplateOutletContext]="{
               validation: 'required',
               message: 'El detalle del bien es requerido',
-              control: crearBienForm.controls['detalle']
+              control: basicoForm.controls['detalle']
             }"
           ></ng-container>
           <ng-container
@@ -134,7 +127,7 @@
             [ngTemplateOutletContext]="{
               validation: 'minlength',
               message: 'El detalle del bien debe tener al menos 3 caracteres',
-              control: crearBienForm.controls['detalle']
+              control: basicoForm.controls['detalle']
             }"
           ></ng-container>
           <ng-container
@@ -142,7 +135,7 @@
             [ngTemplateOutletContext]="{
               validation: 'maxLength',
               message: 'El detalle del bien debe tener como máximo 250 caracteres',
-              control: crearBienForm.controls['detalle']
+              control: basicoForm.controls['detalle']
             }"
           ></ng-container>
         </div>
@@ -163,39 +156,38 @@
           formControlName="valorIncorporacion"
           placeholder="Valor de Incorporación"
           autocomplete="off"
-          [ngClass]="{'is-invalid': crearBienForm.controls['valorIncorporacion'].invalid}"
+          [ngClass]="{'is-invalid': basicoForm.controls['valorIncorporacion'].invalid}"
         />
         <ng-container
           [ngTemplateOutlet]="formError"
           [ngTemplateOutletContext]="{
             validation: 'required',
             message: 'El valor de incorporación del bien es requerido',
-            control: crearBienForm.controls['valorIncorporacion']
+            control: basicoForm.controls['valorIncorporacion']
           }">
         </ng-container>
       </div>
       <!--end::Form group-->
     </div>
     <div class="col-md">
-      <!--begin::Form group-->
+      <!--begin::Form group value="{{bienVisualizado.fechaIncorporacion | date:'dd/MM/yyyy'}}"-->
       <div class="form-group" style="margin-left: 10px;">
         <label class="font-size-h6 font-weight-bolder text-dark">Fecha de Incorporación</label>
         <input
           class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
           type="date"
-          min="0"
           name="fechaIncorporacion"
           formControlName="fechaIncorporacion"
           placeholder="Fecha de Incorporación"
           autocomplete="off"
-          [ngClass]="{'is-invalid': crearBienForm.controls['fechaIncorporacion'].invalid}"
+          [ngClass]="{'is-invalid': basicoForm.controls['fechaIncorporacion'].invalid}"
         />
         <ng-container
           [ngTemplateOutlet]="formError"
           [ngTemplateOutletContext]="{
             validation: 'required',
             message: 'La fecha de incorporación del bien es requerida',
-            control: crearBienForm.controls['fechaIncorporacion']
+            control: basicoForm.controls['fechaIncorporacion']
           }">
         </ng-container>
       </div>
@@ -300,7 +292,8 @@
     <div class="col-md">
       <div class="form-group" style="margin-left: 10px;">
         <label class="font-size-h6 font-weight-bolder text-dark pt-5">Usuario Responsable</label>
-        <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" data-live-search="true" formControlName="usuarioResponsable">
+        <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" data-live-search="true" 
+        formControlName="usuarioResponsable" [(ngModel)]="usuarioResponsable">
           <option *ngFor="let usuario of usuarioResponsableDrop" [value]="usuario.value">
               {{usuario.label}}
           </option>
@@ -313,7 +306,8 @@
       <div class="col-md">
         <div class="form-group" style="margin-left: 10px;">
           <label class="font-size-h6 font-weight-bolder text-dark pt-5">Usuario Asignado</label>
-          <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" data-live-search="true" formControlName="usuarioAsignado">
+          <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" data-live-search="true" 
+          formControlName="usuarioAsignado" [(ngModel)]="usuarioAsignado">
             <option *ngFor="let usuario of usuarioAsignadoDrop" [value]="usuario.value">
                 {{usuario.label}}
             </option>
@@ -323,7 +317,8 @@
       <div class="col-md">
       <div class="form-group" style="margin-left: 10px;">
         <label class="font-size-h6 font-weight-bolder text-dark pt-5">Usuario Aprobador</label>
-        <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" data-live-search="true" formControlName="usuarioAprobador">
+        <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" data-live-search="true" 
+        formControlName="usuarioAprobador" [(ngModel)]="usuarioAprobador">
           <option *ngFor="let usuario of usuarioAprobadorDrop" [value]="usuario.value">
               {{usuario.label}}
           </option>
@@ -336,7 +331,8 @@
       <div class="col-md">
         <div class="form-group" style="margin-left: 10px;">
           <label class="font-size-h6 font-weight-bolder text-dark pt-5">Usuario de Control</label>
-          <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" data-live-search="true" formControlName="usuarioControl">
+          <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" data-live-search="true" 
+          formControlName="usuarioControl" [(ngModel)]="usuarioControl">
             <option *ngFor="let usuario of usuarioControlDrop" [value]="usuario.value">
                 {{usuario.label}}
             </option>
@@ -347,7 +343,8 @@
       <div class="col-md">
       <div class="form-group" style="margin-left: 10px;">
         <label class="font-size-h6 font-weight-bolder text-dark pt-5">Usuario de Registro</label>
-        <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" data-live-search="true" formControlName="usuarioRegistro">
+        <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" data-live-search="true" 
+        formControlName="usuarioRegistro" [(ngModel)]="usuarioRegistro">
           <option *ngFor="let usuario of usuarioRegistroDrop" [value]="usuario.value">
               {{usuario.label}}
           </option>
@@ -441,44 +438,62 @@
       id="kt_login_signup_form"
       [formGroup]="adicionalForm"
       (ngSubmit)="submit()">
-      <div class="row">
-        <div class="col-md">
-          <div class="form-group" style="margin-left: 10px;">
-            <label class="font-size-h6 font-weight-bolder text-dark">Fecha de último mantenimiento</label>
-            <input
-              class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
-              type="date"
-              name="fechaMantenimiento"
-              formControlName="fechaMantenimiento"
-              placeholder="Fecha de último mantenimiento"
-              autocomplete="off"/>
-          </div>
-        </div>
-        <div class="col-md">
-          
-        </div>
-    </div>
-    <div class="row">
+      
+    <div class="row" *ngFor="let detalle of atributosList">
       <div class="col-md">
-          <!--begin::Form group-->
         <div class="form-group" style="margin-left: 10px;">
-          <label class="font-size-h6 font-weight-bolder text-dark">Periodicidad de mantenimiento</label>
+          <label class="font-size-h6 font-weight-bolder text-dark">{{detalle.atributo}}</label>
           <input
             class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
             type="text"
-            name="periodoMantenimiento"
-            formControlName="periodoMantenimiento"
-            placeholder="Periodicidad de Mantenimiento"
-            autocomplete="off"
-            [ngClass]="{'is-invalid': adicionalForm.controls['periodoMantenimiento'].invalid}"
-          />
+            name="{{detalle.atributo}}"
+            formControlName="{{detalle.atributo}}"
+            value="{{detalle.valor}}"
+            placeholder=""
+            autocomplete="off"/>
         </div>
-        <!--end::Form group-->
       </div>
       <div class="col-md">
 
       </div>
     </div>
+    </form>
+  </mat-tab>
+  <mat-tab label="Mantenimiento">
+    <form
+    class="form"
+    novalidate="novalidate"
+    id="kt_login_signup_form"
+    [formGroup]="mantenimientoForm"
+    (ngSubmit)="submit()">
+    <div class="row">
+      <div class="col-md">
+        <div class="form-group" style="margin-left: 10px;">
+          <label class="font-size-h6 font-weight-bolder text-dark">Fecha de último mantenimiento</label>
+          <input
+            class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
+            type="date"
+            name="fechaMantenimiento"
+            formControlName="fechaMantenimiento"
+            placeholder="Fecha de último mantenimiento"
+            autocomplete="off"/>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="form-group" style="margin-left: 10px;">
+        <label class="font-size-h6 font-weight-bolder text-dark">Periodicidad de mantenimiento</label>
+        <input
+          class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
+          type="text"
+          name="periodicidadMantenimiento"
+          formControlName="periodicidadMantenimiento"
+          placeholder="Periodicidad de Mantenimiento"
+          autocomplete="off"
+          [ngClass]="{'is-invalid': mantenimientoForm.controls['periodicidadMantenimiento'].invalid}"
+        />
+        </div>
+      </div>
+  </div>
     </form>
   </mat-tab>
   </mat-tab-group>

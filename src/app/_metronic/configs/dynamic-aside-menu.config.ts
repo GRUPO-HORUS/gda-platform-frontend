@@ -41,10 +41,6 @@ export const DynamicAsideMenuConfig = {
         {
           title: 'Historial',
           page: '/bienes/historial'
-        },
-        {
-          title: 'Reportes',
-          page: '/bienes/reportes'
         }
       ]
     },
@@ -59,6 +55,20 @@ export const DynamicAsideMenuConfig = {
         {
           title: 'Coeficiente de depreciación',
           page: '/contabilidad/coeficiente'
+        }
+      ]
+    },
+    {
+      title: 'Informes',
+      root: true,
+      bullet: 'dot',
+      icon: 'flaticon2-user-outline-symbol',
+      svg: './assets/media/svg/icons/Text/Edit-text.svg',
+      page: '/informes',
+      submenu: [
+        {
+          title: 'Formularios',
+          page: '/informes/fc'
         }
       ]
     },

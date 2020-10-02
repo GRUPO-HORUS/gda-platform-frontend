@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { LayoutService } from '../../../../../core';
 import { DashboardService } from '../../../dashboards/dashboard.service';
 import { Router, NavigationEnd } from '@angular/router';
+import { AuthHTTPService } from '../../../../../../modules/auth/_services/auth-http/auth-http.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-mixed-bienes',
@@ -20,6 +22,8 @@ export class MixedBienesComponent implements OnInit {
   pendientesAprobacion:number=0;
   recordatoriosProx:number=0;
 
+  private unsubscribe: Subscription[] = [];
+
   constructor(private layout: LayoutService, private dashboardService: DashboardService, private router: Router) {
     this.fontFamily = this.layout.getProp('js.fontFamily');
     this.colorsGrayGray500 = this.layout.getProp('js.colors.gray.gray500');
@@ -27,21 +31,31 @@ export class MixedBienesComponent implements OnInit {
     this.colorsGrayGray300 = this.layout.getProp('js.colors.gray.gray300');
     this.colorsThemeBaseDanger = this.layout.getProp('js.colors.theme.base.danger');
 
-  }
-
-  ngOnInit(): void {
-    this.chartOptions = this.getChartOptions();
-
     this.dashboardService.getStatsDashboard().subscribe(stats => {
       this.totalBienes = stats.totalElementos;
       this.pendientesEtiqueta = stats.pendientesEtiquetado;
       this.pendientesAprobacion = stats.pendientesAprobacion;
-      //console.log(this.totalBienes);
+      this.recordatoriosProx = 2;
     });
+
+  }
+
+  ngOnInit(): void {
+    this.chartOptions = this.getChartOptions();
+    setTimeout (() => {
+      this.router.navigate(['/']);
+    }, 1500);
+    /*const subs = this.dashboardService.getStatsDashboard().subscribe(stats => {
+      this.totalBienes = stats.totalElementos;
+      this.pendientesEtiqueta = stats.pendientesEtiquetado;
+      this.pendientesAprobacion = stats.pendientesAprobacion;
+    });
+    this.unsubscribe.push(subs);*/
   }
 
   getChartOptions() {
     const strokeColor = '#D13647';
+
     return {
       series: [
         {

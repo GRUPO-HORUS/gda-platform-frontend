@@ -20,6 +20,8 @@ import { Widget4DropdownComponent } from './lists/lists-widget4/widget4-dropdown
 
 import { AdvanceTablesWidget6Component } from './advance-tables/advance-tables-widget6/advance-tables-widget6.component';
 import { MixedBienesComponent } from './mixed/mixed-bienes/mixed-bienes.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,9 @@ import { MixedBienesComponent } from './mixed/mixed-bienes/mixed-bienes.componen
     InlineSVGModule,
     NgApexchartsModule,
     NgbDropdownModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
   ],
   exports: [
     MixedWidget1Component,

@@ -3,6 +3,8 @@ export class CategoriaModel {
   id: string;
   descripcion: string;
 
+  gdaCategoriaBienId;
+
   /*codigo: string;
   fechaCreacion: Date;
   fechaModificacion: Date;*/

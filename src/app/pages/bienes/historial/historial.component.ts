@@ -21,7 +21,7 @@ export class HistorialComponent implements OnInit {
   displayedColumns: string[] = ['fechaEvento', 'bien', 'detalle'];
   buscarForm: FormGroup;
   dataSource;
-  length: number=10;
+  length: number=0;
   bandera: boolean= false;
 
   nuevoBien;
@@ -29,6 +29,8 @@ export class HistorialComponent implements OnInit {
 
   msgFinal;
   nombreBien:string;
+
+  isLoading = false;
 
   constructor(private bienesService: BienesService, private router: Router, private dialog: MatDialog, private fb: FormBuilder, private _snackBar: MatSnackBar) {
     /*if(this.router.getCurrentNavigation().extras.state !== undefined){
@@ -100,36 +102,43 @@ export class HistorialComponent implements OnInit {
     this.msgFinal='';
     this.nombreBien = '';
     this.dataSource = null;
+
+    this.isLoading = true;
+
     this.bienesService.getTrazaBien(this.buscarForm.controls.rotulado.value).subscribe(bienes => {
+      //console.log(bienes);
       
       if(bienes.totalElements > 0){
         this.dataSource = new MatTableDataSource<BienData>(bienes.content);
         this.dataSource.paginator = this.paginator;
         this.length =bienes.totalElements;
-
         this.nombreBien = bienes.content[0].gdaBienId.detalle;
+        this.isLoading = false;
+
+        this.dataSource.filterPredicate = (data: BienData, filter: string): boolean => {
+          const dataStr = Object.keys(data).reduce((currentTerm: string, key: string) => {
+            //return (currentTerm + (data as { [key: string]: any })[key] + '◬');
+            return key === 'gdaBienId' ? currentTerm + data.gdaBienId.detalle : currentTerm + data[key];
+    
+          }, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    
+          const transformedFilter = filter.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    
+          return dataStr.indexOf(transformedFilter) != -1;
+        }
       }else{
-        this.msgFinal='Este bien no cuenta con una traza.';
+        this.dataSource = null;
+        this.isLoading = false;
+        this.msgFinal='Este bien no cuenta con un historial o traza.';
         this._snackBar.open(this.msgFinal,null, {
           duration: 3500,
         });
-      }
-      
-
-      this.dataSource.filterPredicate = (data: BienData, filter: string): boolean => {
-        const dataStr = Object.keys(data).reduce((currentTerm: string, key: string) => {
-          //return (currentTerm + (data as { [key: string]: any })[key] + '◬');
-          return key === 'gdaBienId' ? currentTerm + data.gdaBienId.detalle : currentTerm + data[key];
-  
-        }, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-  
-        const transformedFilter = filter.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-  
-        return dataStr.indexOf(transformedFilter) != -1;
+        
       }
 
     },error=>{
       //console.log(error.error.apierror.message);
+      this.isLoading = false;
       this.dataSource = null;
       this.msgFinal=error.error.apierror.message;
       this._snackBar.open(this.msgFinal,null, {

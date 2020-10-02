@@ -21,6 +21,7 @@ import { UnidadModel } from '../../../../pages/ubicacion/model/unidad.model';
 import { ContablesTabla } from '../../../../util/contables-tabla';
 import { TrazaTabla } from '../../../../util/traza-tabla';
 import { DashboardDTO } from '../../../../util/dashboard.dto';
+import { AsignacionesTabla } from '../../../../util/asignaciones-tabla';
 
 //const API_USERS_URL = `${environment.apiUrl}/users`;
 const API_USERS_URL = 'http://localhost:8081/api/v1';
@@ -128,6 +129,15 @@ export class AuthHTTPService {
     });
   }
 
+  getAsignacionesBien(token, idBien): Observable<AsignacionesTabla> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.get<AsignacionesTabla>(API_USERS_URL+'/bien/asignaciones/'+idBien, {
+      headers: httpHeaders,
+    });
+  }
+
   getTrazaBien(token, rotulado): Observable<TrazaTabla> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${token}`,
@@ -151,7 +161,7 @@ export class AuthHTTPService {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.get<UnidadModel[]>(API_USERS_URL+'/gestionEntidades/entidad/unidades/?nombre='+entidad, {
+    return this.http.get<UnidadModel[]>(API_USERS_URL+'/gestionEntidades/entidad/unidades?nombre='+entidad, {
       headers: httpHeaders,
     });
   }

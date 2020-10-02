@@ -23,24 +23,24 @@ export class DashboardService implements OnDestroy {
   private authLocalStorageToken = `${environment.appVersion}-${environment.USERDATA_KEY}`;
 
   // public fields
-  /*currentUser$: Observable<UserModel>;
+  currentUser$: Observable<DashboardDTO>;
   isLoading$: Observable<boolean>;
-  currentUserSubject: BehaviorSubject<UserModel>;
+  currentUserSubject: BehaviorSubject<DashboardDTO>;
 
-  get currentUserValue(): UserModel {
+  get currentUserValue(): DashboardDTO {
     return this.currentUserSubject.value;
-  }*/
+  }
 
   constructor(
     private authHttpService: AuthHTTPService,
     private router: Router
   ) {
-    /*this.isLoadingSubject = new BehaviorSubject<boolean>(false);
-    this.currentUserSubject = new BehaviorSubject<UserModel>(undefined);
+    this.isLoadingSubject = new BehaviorSubject<boolean>(false);
+    this.currentUserSubject = new BehaviorSubject<DashboardDTO>(undefined);
     this.currentUser$ = this.currentUserSubject.asObservable();
     this.isLoading$ = this.isLoadingSubject.asObservable();
-    const subscr = this.getUserByToken().subscribe();
-    this.unsubscribe.push(subscr);*/
+    const subscr = this.getStatsDashboard().subscribe();
+    this.unsubscribe.push(subscr);
   }
 
   // public methods

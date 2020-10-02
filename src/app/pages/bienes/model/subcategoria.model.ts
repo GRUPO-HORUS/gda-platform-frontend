@@ -1,7 +1,9 @@
 import { CategoriaModel } from "./categoria.model";
 
 export class SubCategoriaModel {
-  gdaCategoriaBienList: CategoriaModel[];
+  gdaCategoriaBienList: CategoriaModel[]; //Original
+  gdaBienList: CategoriaModel[];
+  //gdaCategoriaBienId: CategoriaModel[];
   
   /*setRol(rol: any) {
     this.id = rol.id;

@@ -53,11 +53,11 @@
       <!--begin::Row-->
       <div class="row m-0">
         <div class="col bg-light-warning px-6 py-8 rounded-xl mr-7 mb-7">
-          <span
+          <a class="text-warning font-weight-bold font-size-h6" routerLink="/bienes"><span
             [inlineSVG]="'./assets/media/svg/icons/Shopping/Chart-bar3.svg'"
             class="svg-icon svg-icon-3x svg-icon-warning d-block my-2"
           ></span>
-          <span class="text-warning font-weight-bold font-size-h6">Total de Ítems: <span class="text-warning font-weight-bold font-size-h3">{{totalBienes}}</span></span>
+          <span class="text-warning font-weight-bold font-size-h6">Total de Ítems: <span class="text-warning font-weight-bold font-size-h3">{{totalBienes}}</span></span></a>
           <!--<a href="#" class="text-warning font-weight-bold font-size-h6">Total de Ítems</a>-->
         </div>
         <div class="col bg-light-primary px-6 py-8 rounded-xl mb-7">
@@ -81,13 +81,13 @@
           <!--<a href="#" class="text-danger font-weight-bold font-size-h6 mt-2">Item Orders</a>-->
         </div>
         <div class="col bg-light-success px-6 py-8 rounded-xl">
-          <span
+          <a class="text-warning font-weight-bold font-size-h6" routerLink="/bandeja"><span
             [inlineSVG]="
               './assets/media/svg/icons/Communication/Urgent-mail.svg'
             "
             class="svg-icon svg-icon-3x svg-icon-success d-block my-2"
           ></span>
-          <span class="text-success font-weight-bold font-size-h6">Recordatorios Próximos: <span class="text-success font-weight-bold font-size-h3">{{recordatoriosProx}}</span></span>
+          <span class="text-success font-weight-bold font-size-h6">Recordatorios Próximos: <span class="text-success font-weight-bold font-size-h3">{{recordatoriosProx}}</span></span></a>
           <!--<a href="#" class="text-success font-weight-bold font-size-h6 mt-2">Bug Reports</a>-->
         </div>
       </div>

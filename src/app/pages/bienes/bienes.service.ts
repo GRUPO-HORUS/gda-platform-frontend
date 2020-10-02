@@ -16,6 +16,7 @@ import { AtributoValorBienDTO } from '../../util/atributo-valor-bien.dto';
 import { AtributosBien } from '../../util/atributos-bien';
 import { ContablesTabla } from '../../util/contables-tabla';
 import { TrazaTabla } from '../../util/traza-tabla';
+import { AsignacionesTabla } from '../../util/asignaciones-tabla';
 
 @Injectable({
   providedIn: 'root',
@@ -84,11 +85,20 @@ export class BienesService implements OnDestroy {
       );
   }
 
-  getDetallesBien(idBien): Observable<AtributosBien>{
+  getAtributosBien(idBien): Observable<AtributosBien>{
     const auth = this.getAuthFromLocalStorage(); 
     return this.authHttpService.getDetallesBien(auth.access_token, idBien).pipe(
       map((bienes: AtributosBien) => {
         return bienes;
+      }),
+    );
+  }
+
+  getAsignacionesBien(idBien): Observable<AsignacionesTabla>{
+    const auth = this.getAuthFromLocalStorage(); 
+    return this.authHttpService.getAsignacionesBien(auth.access_token, idBien).pipe(
+      map((asignaciones: AsignacionesTabla) => {
+        return asignaciones;
       }),
     );
   }

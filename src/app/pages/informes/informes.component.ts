@@ -1,32 +1,27 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { BienesService } from './bienes.service';
-import { TipoBienModel } from './model/tipo-bien.model';
-import { CategoriaModel } from './model/categoria.model';
-import { UnidadModel } from './model/unidad.model';
+import { BienesService } from '../bienes/bienes.service';
+import { CategoriaModel } from '../bienes/model/categoria.model';
+import { UnidadModel } from '../bienes/model/unidad.model';
 import { Router, NavigationEnd } from '@angular/router';
-import { VerBienComponent } from './ver-bien/ver-bien.component';
 import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
-  selector: 'app-bienes',
-  templateUrl: './bienes.component.html',
-  styleUrls: ['./bienes.component.scss']
+  selector: 'app-informes',
+  templateUrl: './informes.component.html'
+  //styleUrls: ['./bienes.component.scss']
 })
-export class BienesComponent implements OnInit {
+export class InformesComponent implements OnInit {
   displayedColumns: string[] = [ 'rotulado', 'fechaIncorporacion', 'valorIncorporacion','gdaCategoriaBienId', 'gdaUnidadUbicacionId','acciones'];
   //'detalle', 'gdaCategoriaBienId', 'gdaTipoBien'
   dataSource;
   length: number=10;
   bandera: boolean= false;
-
   nuevoBien;
-  nuevoBien2;
 
   cantNuevos;
-  edicion:boolean;
 
   constructor(private bienesService: BienesService, private router: Router, private dialog: MatDialog) {
     /*if(this.router.getCurrentNavigation().extras.state !== undefined){
@@ -42,13 +37,13 @@ export class BienesComponent implements OnInit {
         if(this.router.getCurrentNavigation().extras.state !== undefined){
           //console.log(event.url);
           this.nuevoBien = this.router.getCurrentNavigation().extras.state.bien;
-          this.edicion = this.router.getCurrentNavigation().extras.state.editar;
           this.bandera = true;
         }
       }
     });
     
   }
+
   /*constructor(private bienesService: BienesService, private router: Router) {
     if(this.router.getCurrentNavigation().extras.state !== undefined){
         //console.log(this.router.getCurrentNavigation().extras.state.bien);
@@ -72,16 +67,9 @@ export class BienesComponent implements OnInit {
       gdaCategoriaBienId:{id:'7fdfbc99-a168-4f31-b794-a7d7ac02bd00', descripcion: 'UNIDAD CENTRAL DE PROCESAMIENTO (CPU)'}, gdaUnidadUbicacionId:{id:'7fdfbc99-a168-4f31-b794-a7d7ac02bd00', nombre: 'Gestión de Proyectos'}});*/
 
       if(this.bandera){
-        if(!this.edicion){
-          this.length = bienes.totalElements+1;
-          //this.nuevoBien2 = JSON.parse(localStorage.getItem(this.nuevoBien.id));
-          bienes.content.push(this.nuevoBien);
-        }else{
-          bienes.content.shift();
-          bienes.content.push(this.nuevoBien);
-          this.length = bienes.totalElements;
-        }
-        
+        this.length = bienes.totalElements+1;
+        //this.nuevoBien2 = JSON.parse(localStorage.getItem(this.nuevoBien.id));
+        bienes.content.push(this.nuevoBien);
       }else{
         this.length = bienes.totalElements;
       }
@@ -107,16 +95,15 @@ export class BienesComponent implements OnInit {
     });
   }
 
+  reportePdf(){ //id:number
+    console.log('pdf');
+    //window.open('/api/controlesCriticos/diagnosticoCabecera/finalizadoReport/'+id+'?type=pdf');
+  }
+
   verBien(bien){
     //const dialogRef = this.dialog.open(DetalleBienComponent, { data: {id: id, detalle: detalle} ,height: '350px', width: '450px'});
     //console.log(bien);
     this.router.navigate(['/bienes/ver'],{ state: { bienP: bien } });
-  }
-
-  editarBien(bien){
-    //const dialogRef = this.dialog.open(DetalleBienComponent, { data: {id: id, detalle: detalle} ,height: '350px', width: '450px'});
-    //console.log(bien);
-    this.router.navigate(['/bienes/editar'],{ state: { bienP: bien } });
   }
 
   filtrar(filterValue: string) {
@@ -133,7 +120,6 @@ export interface BienData {
   valorIncorporacion: number;
   gdaCategoriaBienId: CategoriaModel;
   gdaUnidadUbicacionId: UnidadModel;
-  //gdaTipoBien: TipoBienModel;          //TipoBienModel
 
   /*setBien(bien: any) {
     this.id = '';

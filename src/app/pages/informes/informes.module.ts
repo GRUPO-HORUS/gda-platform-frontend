@@ -2,9 +2,6 @@ import { NgModule, LOCALE_ID } from '@angular/core';
 
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { BienesComponent } from './bienes.component';
-import { CrearBienComponent } from './crear-bien.component';
-import { VerBienComponent } from './ver-bien/ver-bien.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTabsModule} from '@angular/material/tabs';
@@ -19,11 +16,10 @@ import { AuthGuard } from '../../modules/auth/_services/auth.guard';
 //import { DashboardsModule } from 'src/app/_metronic/partials/content/dashboards/dashboards.module';
 
 import es from '@angular/common/locales/es';
-import { HistorialComponent } from './historial/historial.component';
-import { EditarBienComponent } from './editar-bien/editar-bien.component';
+import { InformesComponent } from './informes.component';
 registerLocaleData(es);
 @NgModule({
-  declarations: [BienesComponent, CrearBienComponent, VerBienComponent, HistorialComponent, EditarBienComponent],
+  declarations: [InformesComponent],
   imports: [
     ReactiveFormsModule,
     FormsModule,
@@ -38,28 +34,8 @@ registerLocaleData(es);
     CommonModule,
     RouterModule.forChild([
       {
-        path: '',
-        component: BienesComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'nuevo',
-        component: CrearBienComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'ver',
-        component: VerBienComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'editar',
-        component: EditarBienComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'historial',
-        component: HistorialComponent,
+        path: 'fc',
+        component: InformesComponent,
         canActivate: [AuthGuard],
       },
     ]),
@@ -69,4 +45,4 @@ registerLocaleData(es);
     {provide: LOCALE_ID, useValue: "es-ES"}
   ]
 })
-export class BienesModule {}
+export class InformesModule {}

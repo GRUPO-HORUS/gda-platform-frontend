@@ -3,7 +3,7 @@
   <div class="login login-1 login-signin-on flex-column flex-lg-row flex-column-fluid bg-white" id="kt_login">
   
     <!--begin::Title-->
-    <div class="card-header border-0 py-5">
+    <div class="card-header border-0 py-2">
     <!--<div class="pb-13 pt-lg-0 pt-5" style="margin-left: 50px;">-->
       <h3 class="card-title align-items-start flex-column"><!--font-weight-bolder text-dark font-size-h4 font-size-h1-lg-->
         <span class="card-label font-weight-bolder text-dark" style="font-size: 1.275rem !important">Datos del Bien</span>
@@ -14,10 +14,10 @@
       <a routerLink="/bienes"
       type="button"
       id="kt_login_signup_cancel"
-      class="btn btn-light-primary font-weight-bolder font-size-h6 px-8 py-4 my-3">
+      class="btn btn-light-primary font-weight-bolder font-size-h6 px-8 py-2 my-3">
       Cerrar</a>
       
-  <mat-tab-group style="margin-top: 15px; width: 100%;">
+  <mat-tab-group style="margin-top: 10px; width: 100%;">
     <mat-tab label="Datos Básicos">
       <!--begin::Form-->
       <form
@@ -56,8 +56,7 @@
                   {{categoria.label}}
               </option>
             </select>-->
-            <input
-            class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
+            <input class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
             type="text"
             name="subcategoria"
             formControlName="subcategoria"
@@ -66,7 +65,9 @@
           </div>
           <!--end::Form group-->
         </div>
-
+      </div>
+      <!--end::row-->
+      <div class="row">
         <div class="col-md">
           <!--begin::Form group-->
           <div class="form-group" style="margin-left: 10px;">
@@ -78,33 +79,31 @@
                   {{tipo.label}}
               </option>
             </select>-->
-
-            <input
-            class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
-            type="text"
-            name="tipo"
+            <input class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
+            type="text" name="tipo"
             formControlName="tipo"
             placeholder="Tipo"
             autocomplete="off" readonly/>
-
           </div>
           <!--end::Form group-->
         </div>
-      </div>
-      <!--end::row-->
-      <div class="form-group" style="margin-left: 10px;">
-        <label class="font-size-h6 font-weight-bolder text-dark">Detalle</label>
-        <!--<input
-          class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
-          type="text"
-          name="detalle"
-          formControlName="detalle"
-          placeholder="Detalle"
-          autocomplete="off"
-          [ngClass]="{'is-invalid': crearBienForm.controls['detalle'].invalid}"/>-->
-        <textarea type="text" id="form7" rows="8" class="form-control form-control-solid" formControlName="detalle" readonly></textarea>
-      </div>
-      <!--end::Form group-->
+        <div class="col-md">
+          <div class="form-group" style="margin-top: 15px; margin-left: 10px;">
+            <label class="font-size-h6 font-weight-bolder text-dark">Detalle</label>
+            <!--<input
+              class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
+              type="text"
+              name="detalle"
+              formControlName="detalle"
+              placeholder="Detalle"
+              autocomplete="off"
+              [ngClass]="{'is-invalid': crearBienForm.controls['detalle'].invalid}"/>-->
+            <textarea type="text" id="form7" rows="8" class="form-control form-control-solid font-size-h6" formControlName="detalle" readonly></textarea>
+          </div>
+          <!--end::Form group-->
+        </div>
+    </div>
+    <!--end::row-->
       <div class="row">
         <div class="col-md">
       <!--begin::Form group-->
@@ -139,37 +138,36 @@
     </div>
     </div>
     <!--end::row-->
-    <hr style="border:2px groove solid">
-    <fieldset>
-      <legend>Asignación:</legend>
     <div class="row">
-      <div class="col-md">
-          <div class="form-group" style="margin-left: 10px;">
-            <label class="font-size-h6 font-weight-bolder text-dark pt-5">Unidad</label>
-            <input
-                class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
-                type="text"
-                name="unidad"
-                formControlName="unidad"
-                placeholder="Unidad"
-                autocomplete="off" readonly/>
-          </div>
-      </div>
-      <div class="col-md">
-        <div class="form-group" style="margin-left: 10px;">
-          <label class="font-size-h6 font-weight-bolder text-dark pt-5">Usuario Responsable</label>
-          <input
-              class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
-              type="text"
-              name="usuarioResponsable"
-              formControlName="usuarioResponsable"
-              placeholder="Usuario Responsable"
-              autocomplete="off" readonly/>
-        </div>
+    <div class="col-md">
+      <div class="form-group" style="margin-left: 10px;">
+        <label class="font-size-h6 font-weight-bolder text-dark pt-5">Estado de Conservación</label>
+        <input
+            class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
+            type="text"
+            name="estadoConservacion"
+            formControlName="estadoConservacion"
+            placeholder="Estado de Conservación"
+            autocomplete="off" readonly/>
       </div>
     </div>
-    <!--end::row-->
-  </fieldset>
+    <div class="col-md">
+      <div class="form-group" style="margin-left: 10px;">
+        <label class="font-size-h6 font-weight-bolder text-dark pt-5">Existencia en Inventario</label>
+        <input
+            class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
+            type="text"
+            name="existenciaInventario"
+            formControlName="existenciaInventario"
+            placeholder="Existencia en Inventario"
+            autocomplete="off" readonly/>
+      </div>
+    </div>
+  </div>
+    <!--<hr style="border:2px groove solid">
+    <fieldset>
+      <legend>Asignación:</legend>
+    </fieldset>-->
      <!--begin::Form group-->
       <!--Condicion en boton Aceptar [disabled]="registrationForm.invalid || !registrationForm.controls['agree'].value"-->
       <!--<div class="form-group d-flex flex-wrap pb-lg-0 pb-3">
@@ -194,6 +192,101 @@
     </form>
     <!--end::Form-->
     </mat-tab>
+    <mat-tab label="Asignación">
+      <form
+      class="form"
+      novalidate="novalidate"
+      id="kt_login_signup_form"
+      [formGroup]="asignacionForm"> 
+      <div class="row">
+        <div class="col-md">
+          <div class="form-group" style="margin-left: 10px;">
+            <label class="font-size-h6 font-weight-bolder text-dark pt-5">Unidad</label>
+            <input
+                class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
+                type="text"
+                name="unidad"
+                formControlName="unidad"
+                placeholder="Unidad"
+                autocomplete="off" readonly/>
+          </div>
+        </div>
+        <div class="col-md"> 
+          <div class="form-group" style="margin-left: 10px;">
+            <label class="font-size-h6 font-weight-bolder text-dark pt-5">Usuario Responsable</label>
+            <input
+                class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
+                type="text"
+                name="usuarioResponsable"
+                formControlName="usuarioResponsable"
+                [(ngModel)]="usuarioResponsable"
+                placeholder="No tiene usuario responsable."
+                autocomplete="off" readonly/>
+          </div>
+        </div>
+    </div>
+    <!--end::row-->
+    <div class="row">
+      <div class="col-md"> 
+        <div class="form-group" style="margin-left: 10px;">
+          <label class="font-size-h6 font-weight-bolder text-dark pt-5">Usuario Asignado</label>
+          <input
+              class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
+              type="text"
+              name="usuarioAsignado"
+              formControlName="usuarioAsignado"
+              [(ngModel)]="usuarioAsignado"
+              placeholder="No tiene usuario asignado."
+              autocomplete="off" readonly/>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="form-group" style="margin-left: 10px;">
+          <label class="font-size-h6 font-weight-bolder text-dark pt-5">Usuario Aprobador</label>
+          <input
+              class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
+              type="text"
+              name="usuarioAprobador"
+              formControlName="usuarioAprobador"
+              [(ngModel)]="usuarioAprobador"
+              placeholder="No tiene usuario aprobador."
+              autocomplete="off" readonly/>
+        </div>
+      </div>
+    </div>
+    <!--end::row-->
+    <div class="row">
+      <div class="col-md">
+        <div class="form-group" style="margin-left: 10px;">
+          <label class="font-size-h6 font-weight-bolder text-dark pt-5">Usuario de Control</label>
+          <input
+              class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
+              type="text"
+              name="usuarioControl"
+              formControlName="usuarioControl"
+              [(ngModel)]="usuarioControl"
+              placeholder="No tiene usuario de Control."
+              autocomplete="off" readonly/>
+        </div>
+      </div>
+    
+      <div class="col-md">
+        <div class="form-group" style="margin-left: 10px;">
+          <label class="font-size-h6 font-weight-bolder text-dark pt-5">Usuario de Registro</label>
+          <input
+              class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
+              type="text"
+              name="usuarioRegistro"
+              formControlName="usuarioRegistro"
+              [(ngModel)]="usuarioRegistro"
+              placeholder="No tiene usuario de registro."
+              autocomplete="off" readonly/>
+        </div>
+      </div>
+    </div>
+    <!--end::row-->
+      </form>
+    </mat-tab>
     <mat-tab label="Datos Adicionales">
       <form
       class="form"
@@ -202,38 +295,72 @@
       [formGroup]="adicionalForm">
       <div class="row">
         <div class="col-md">
-          <!--begin::Form group formControlName="fechaIncorporacion"-->
+
+        </div>
+        <div class="col-md" style="text-align: center;">
+          <img src="{{imagenPath}}" alt="Prueba" style="width: 160px; height: 135px;">
+        </div>
+      </div>
+      <div class="row" *ngFor="let detalle of atributosList">
+        <div class="col-md">
           <div class="form-group" style="margin-left: 10px;">
-            <label class="font-size-h6 font-weight-bolder text-dark">Fecha de último mantenimiento</label>
+            <label class="font-size-h6 font-weight-bolder text-dark">{{detalle.atributo}}</label>
             <input
               class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
               type="text"
               min="0"
               name="fechaIncorporacion"
-              value="{{bienVisualizado.fechaIncorporacion | date:'dd/MM/yyyy'}}"
+              value="{{detalle.valor}}"
               placeholder="Fecha de Incorporación"
               autocomplete="off" readonly/>
           </div>
-          <!--end::Form group-->
         </div>
         <div class="col-md">
-          <!--begin::Form group formControlName="fechaIncorporacion"-->
-          <div class="form-group" style="margin-left: 10px;">
+
+        </div>
+        
+      </div>
+      </form>
+    </mat-tab>
+    <mat-tab label="Mantenimiento">
+      <form
+      class="form"
+      novalidate="novalidate"
+      id="kt_login_signup_form"
+      [formGroup]="mantenimientoForm">
+      <div class="row">
+        <div class="col-md">
+         <!--begin::Form group value="{{bienVisualizado.fechaMantenimiento | date:'dd/MM/yyyy'}}"-->
+         <div class="form-group" style="margin-left: 10px;">
+          <label class="font-size-h6 font-weight-bolder text-dark">Fecha de último mantenimiento</label>
+          <input
+            class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
+            type="text"
+            name="fechaMantenimiento"
+            value="{{bienVisualizado.fechaIncorporacion | date:'dd/MM/yyyy'}}"
+            placeholder="Fecha de último mantenimiento"
+            autocomplete="off" readonly/>
+        </div>
+        <!--end::Form group style="margin-left: 80px;"-->
+        </div>
+        <div class="col-md">
+           <!--begin::Form group-->
+           <div class="form-group" style="margin-left: 10px;">
             <label class="font-size-h6 font-weight-bolder text-dark">Periodicidad del mantenimiento</label>
             <input
               class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
               type="text"
-              min="0"
-              name="fechaIncorporacion"
+              name="periodicidadMantenimiento"
+              formControlName="periodicidadMantenimiento"
               value="15 días"
-              placeholder="Fecha de Incorporación"
+              placeholder="Periodicidad del mantenimiento"
               autocomplete="off" readonly/>
           </div>
           <!--end::Form group-->
         </div>
       </div>
       </form>
-    </mat-tab>
+  </mat-tab>
     <!--<mat-tab label="Datos Contables">
       <table mat-table [dataSource]="dataSource">
 
@@ -261,26 +388,6 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
     </mat-tab>-->
-    <!--<mat-tab label="Mantenimiento">
-      <form
-      class="form"
-      novalidate="novalidate"
-      id="kt_login_signup_form"
-      [formGroup]="mantenimientoForm"> 
-        <div class="form-group" style="margin-left: 10px;">
-          <label class="font-size-h6 font-weight-bolder text-dark">Fecha de mantenimiento</label>
-          <input
-            class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
-            type="date"
-            min="0"
-            name="fechaMantenimiento"
-            formControlName="fechaMantenimiento"
-            placeholder="Fecha de Mantenimiento"
-            autocomplete="off"
-          />
-        </div>
-      </form>
-  </mat-tab>-->
   </mat-tab-group>
   </div>
   <!--end container-->

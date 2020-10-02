@@ -26,6 +26,12 @@ const routes: Routes = [
       },
 
       {
+        path: 'informes',
+        loadChildren: () =>
+          import('./informes/informes.module').then((m) => m.InformesModule),
+      },
+
+      {
         path: 'bandeja',
         loadChildren: () =>
           import('./bandeja/bandeja.module').then((m) => m.BandejaModule),

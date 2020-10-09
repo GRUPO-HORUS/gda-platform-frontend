@@ -64,12 +64,14 @@ export class EditarBienComponent implements OnInit {
   categoriaHijaId;
   unidadesD;
 
+  url: string = '';
+  selectedFile;
+  ultimaCategoria: any;
+  
   constructor(private authService: AuthService, private bienesService: BienesService, private ubicacionService: UbicacionService, 
               private fb: FormBuilder, private router: Router, private dp: DatePipe) {
       if(this.router.getCurrentNavigation().extras.state !== undefined){
           this.bienVisualizado = this.router.getCurrentNavigation().extras.state.bienP;
-          
-          console.log(this.bienVisualizado.gdaCategoriaBienId);
 
           this.bienesService.getAtributosBien(this.bienVisualizado.id).subscribe(atributos => { 
               this.atributosList = atributos.atributoValorBienDTOS;
@@ -136,12 +138,17 @@ export class EditarBienComponent implements OnInit {
 
     let usu = this.authService.getUserFromLocalStorage();
     //this.unidadesDrop.push({ label: 'PRESIDENCIA', value: '7fdfbc99-a168-4f31-b794-a7d7ac02bd00' });
+    
     this.ubicacionService.getAllUnidadesEntidad(usu.entidad).subscribe(unidades => {
-      console.log(unidades);
+      
       this.unidadesD = unidades;
       for (let uni of unidades) {
           this.unidadesDrop.push({ label: uni.nombre, value: uni.id });
-      }     
+
+          for(let uniHija of uni.unidades_hijas){
+            this.unidadesDrop.push({ label: uniHija.nombre, value: uniHija.id });
+          }
+      }
     });
 
     this.authService.getAllUsers().subscribe(usuarios => {
@@ -178,8 +185,6 @@ export class EditarBienComponent implements OnInit {
           this.categoriasDrop.push({ label: c.descripcion, value: c.id });
       }
     });
-
-
 
     if(this.bienVisualizado.gdaCategoriaBienId.categoriaPadre == null){
       this.categoriaPadreId = this.bienVisualizado.gdaCategoriaBienId.id;
@@ -290,9 +295,10 @@ export class EditarBienComponent implements OnInit {
         catHija.nombre = 'subcategoria'+this.catHijas.length;
 
         let categoriasD = categorias.content;
+        let cates = [];
         for (let i = 0; i < categoriasD.length; i++) {
             //let cates = categoriasD[i].gdaCategoriaBienList;
-            let cates = [];
+            //let cates = [];
             if(categoriasD[i].gdaCategoriaBienList.length > 0 ){
               cates = categoriasD[i].gdaCategoriaBienList;
             }else{
@@ -320,13 +326,71 @@ export class EditarBienComponent implements OnInit {
     });
   }
 
-  getHijasAlCambiar($event){
+  getHijasAlCambiar($event, band){
+    if(band==='base'){
+      this.catHijas = [];
+    }
+
     this.subCategoriasDrop = [];
     this.bienesService.getAllCategoriasHijas($event.target.value).subscribe(categorias => {
       if(categorias.content.length > 0){
         let catHija = new CatHija();
         catHija.nombre = 'subcategoria'+this.catHijas.length;
 
+        let categoriasD = categorias.content;
+        for (let i = 0; i < categoriasD.length; i++) {
+            //let cates = categoriasD[i].gdaCategoriaBienList;
+            let cates = [];
+            if(categoriasD[i].gdaCategoriaBienList.length > 0 ){
+              cates = categoriasD[i].gdaCategoriaBienList;
+            }else{
+              cates = categoriasD[i].gdaBienList;
+              //console.log(cates);
+            }
+            
+            for(let c of cates){
+              //this.subCategoriasDrop.push({ label: c.descripcion, value: c.id });
+              if(c.gdaCategoriaBienId !== undefined){
+                this.subCategoriasDrop.push({ label: c.gdaCategoriaBienId.descripcion, value: c.gdaCategoriaBienId.id });
+              } 
+            }
+        }
+        catHija.subcategorias = this.subCategoriasDrop;
+        //this.catHijas.push('subcategoria'+this.catHijas.length);
+        this.catHijas.push(catHija);
+
+        for(let hija of this.catHijas){
+          //console.log(hija);
+          this.basicoForm.addControl(hija.nombre,this.fb.control(''));
+        }
+      }else{
+        this.ultimaCategoria = $event.target.value;
+
+        this.bienesService.getAtributosCategoria(this.ultimaCategoria).subscribe(atributos => { 
+          this.atributosList = atributos.atributoFormularioBien;
+          for(let atributo of this.atributosList){
+            if(atributo.requerido){
+              this.adicionalForm.addControl(atributo.nombre,this.fb.control('',  [Validators.required]));
+            }else{
+              this.adicionalForm.addControl(atributo.nombre,this.fb.control(''));
+            }
+          }
+      });
+      }
+     
+    });
+  }
+
+  /*getHijasAlCambiar($event, band){
+    if(band==='base'){
+      this.catHijas = [];
+    }
+    this.subCategoriasDrop = [];
+    this.bienesService.getAllCategoriasHijas($event.target.value).subscribe(categorias => {
+      if(categorias.content.length > 0){
+        let catHija = new CatHija();
+        catHija.subcategorias = [];
+        catHija.nombre = 'subcategoria'+this.catHijas.length;
         let categoriasD = categorias.content;
         for (let i = 0; i < categoriasD.length; i++) {
             //let cates = categoriasD[i].gdaCategoriaBienList;
@@ -349,13 +413,36 @@ export class EditarBienComponent implements OnInit {
         //this.catHijas.push('subcategoria'+this.catHijas.length);
         this.catHijas.push(catHija);
 
+        //this.basicoForm.removeControl('subcategoria1');
+
         for(let hija of this.catHijas){
-          //console.log(hija);
           this.basicoForm.addControl(hija.nombre,this.fb.control(''));
+          //this.basicoForm.setControl(hija.nombre,this.fb.control(''));
         }
       }
      
     });
+  }*/
+
+  public addFile(event: any) {
+    if (event.target.files && event.target.files[0]) {
+        this.selectedFile = event.target.files[0];
+            var reader = new FileReader();
+            reader.onload = (event: any) => {
+                this.url = event.target.result;
+                
+            }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+  }
+
+  public addPreview() {
+    this.url = this.url;   
+  }
+
+  deleteFile(){
+    this.url ='';
+    this.selectedFile = null;
   }
 
   submit() {
@@ -366,7 +453,7 @@ export class EditarBienComponent implements OnInit {
     nuevoBien.fechaIncorporacion = this.basicoForm.controls.fechaIncorporacion.value;
     nuevoBien.valorIncorporacion = this.basicoForm.controls.valorIncorporacion.value;
     nuevoBien.gdaCategoriaBienId= {id: '7fdfbc99-a168-4f31-b794-a7d7ac02bd00', descripcion: 'UNIDAD CENTRAL DE PROCESAMIENTO (CPU)', gdaCategoriaBienId:{}};
-    nuevoBien.gdaUnidadUbicacionId= {id: '7fdfbc99-a168-4f31-b794-a7d7ac02bd00', nombre: 'PRESIDENCIA'};
+    nuevoBien.gdaUnidadUbicacionId= {id: '7fdfbc99-a168-4f31-b794-a7d7ac02bd00', nombre: 'PRESIDENCIA', unidades_hijas:[]};
 
     //console.log(this.asignacionForm.controls.usuarioResponsable.value);
     setTimeout (() => {

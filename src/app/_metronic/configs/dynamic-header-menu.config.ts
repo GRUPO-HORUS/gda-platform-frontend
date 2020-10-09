@@ -1,13 +1,13 @@
 export const DynamicHeaderMenuConfig = {
   items: [
 
-    {
+    /*{
       title: 'Bandeja de Entrada',
       root: true,
       alignment: 'left',
       page: '/bandeja'
     },
-    /*{
+    {
       title: 'Inicio',
       root: true,
       alignment: 'left',

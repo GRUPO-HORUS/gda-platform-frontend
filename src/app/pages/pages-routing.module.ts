@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from './_layout/layout.component';
 
+import { AuthGuard } from '../modules/auth/_services/auth.guard';
+
 const routes: Routes = [
   {
     path: '',
@@ -17,6 +19,7 @@ const routes: Routes = [
         path: 'bienes',
         loadChildren: () =>
           import('./bienes/bienes.module').then((m) => m.BienesModule),
+        canActivate: [AuthGuard],
       },
 
       {
@@ -29,6 +32,12 @@ const routes: Routes = [
         path: 'informes',
         loadChildren: () =>
           import('./informes/informes.module').then((m) => m.InformesModule),
+      },
+
+      {
+        path: 'movimientos',
+        loadChildren: () =>
+          import('./ubicacion/ubicacion.module').then((m) => m.UbicacionModule),
       },
 
       {

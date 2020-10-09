@@ -42,7 +42,6 @@ export class VerBienComponent implements OnInit {
 
           this.bienesService.getAtributosBien(this.bienVisualizado.id).subscribe(atributos => { 
               this.atributosList = atributos.atributoValorBienDTOS;
-            
           });
 
           this.bienesService.getAsignacionesBien(this.bienVisualizado.id).subscribe(asignaciones => { 

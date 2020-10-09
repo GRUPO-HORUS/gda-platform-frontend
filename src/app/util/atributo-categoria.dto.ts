@@ -1,9 +1,8 @@
-
-export class UnidadModel {
-  id: string;
+export class AtributoCategoriaDTO {
   nombre: string;
-
-  unidades_hijas;
+  requerido: boolean;
+  unico: boolean;
+  tipoDatoAtributos: string;
   
   /*setRol(rol: any) {
     this.id = rol.id;

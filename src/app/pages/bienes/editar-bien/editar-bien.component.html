@@ -67,7 +67,7 @@
           <div class="form-group" style="margin-left: 10px;">
             <label class="font-size-h6 font-weight-bolder text-dark pt-5">Categoría</label>
             <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" 
-            data-live-search="true" formControlName="categoria" (change)="getHijasAlCambiar($event)"
+            data-live-search="true" formControlName="categoria" (change)="getHijasAlCambiar($event, 'base')"
             [ngClass]="{'is-invalid': basicoForm.controls['categoria'].invalid}">
               <!--<option>
                 Seleccione
@@ -87,7 +87,7 @@
           <div class="form-group" style="margin-left: 10px;">
             <label class="font-size-h6 font-weight-bolder text-dark pt-5">Sub Categoría</label>
             <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" 
-            data-live-search="true" formControlName="{{hija.nombre}}" (change)="getHijasAlCambiar($event)">
+            data-live-search="true" formControlName="{{hija.nombre}}" (change)="getHijasAlCambiar($event, 'noBase')">
               <option *ngFor="let subcategoria of hija.subcategorias" [value]="subcategoria.value">
                   {{subcategoria.label}}
               </option>
@@ -438,7 +438,18 @@
       id="kt_login_signup_form"
       [formGroup]="adicionalForm"
       (ngSubmit)="submit()">
-      
+      <div class="row">
+      <div class="col-md">
+        <label class="font-size-h6 font-weight-bolder text-dark">Imagen</label>
+        <input type="file" class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
+         (change)="addFile($event)" (blur)="addPreview()" accept=".jpg,.png"/>
+      </div>
+      <div class="col-md" style="text-align: center;">
+      <div *ngIf="url">
+        <img [src]="url" height= "80" alt="Vista previa"><span style="font-size: medium; color: red;"(click)="deleteFile()">Eliminar &times;</span> 
+      </div>
+    </div>
+  </div>
     <div class="row" *ngFor="let detalle of atributosList">
       <div class="col-md">
         <div class="form-group" style="margin-left: 10px;">

@@ -17,6 +17,8 @@ import { AtributosBien } from '../../util/atributos-bien';
 import { ContablesTabla } from '../../util/contables-tabla';
 import { TrazaTabla } from '../../util/traza-tabla';
 import { AsignacionesTabla } from '../../util/asignaciones-tabla';
+import { AtributosCategoria } from '../../util/atributos-categoria';
+import { BienModel } from './model/bien.model';
 
 @Injectable({
   providedIn: 'root',
@@ -85,6 +87,15 @@ export class BienesService implements OnDestroy {
       );
   }
 
+  getAtributosCategoria(idCategoria): Observable<AtributosCategoria>{
+    const auth = this.getAuthFromLocalStorage(); 
+    return this.authHttpService.getAtributosCategoria(auth.access_token, idCategoria).pipe(
+      map((bienes: AtributosCategoria) => {
+        return bienes;
+      }),
+    );
+  }
+
   getAtributosBien(idBien): Observable<AtributosBien>{
     const auth = this.getAuthFromLocalStorage(); 
     return this.authHttpService.getDetallesBien(auth.access_token, idBien).pipe(
@@ -119,6 +130,25 @@ export class BienesService implements OnDestroy {
         return bienes;
       }),
       );
+  }
+
+  crearBien(nuevoBien):Observable<any>{
+    const auth = this.getAuthFromLocalStorage();
+    //this.isLoadingSubject.next(true);
+    return this.authHttpService.crearBien(auth.access_token, nuevoBien);/*.pipe(
+      retry(1)
+      ,catchError((err) => {
+        console.error('err', err);
+        let error = new Error();
+        if(err.error.apierror.formatted){
+          error.message = err.error.apierror.message;
+        }else{
+          error.message = "Ha ocurrido un error. Contacte al administrador."
+        }
+        return of(error);
+      })
+      ,finalize(() => this.isLoadingSubject.next(false))
+    );*/
   }
 
   // private methods

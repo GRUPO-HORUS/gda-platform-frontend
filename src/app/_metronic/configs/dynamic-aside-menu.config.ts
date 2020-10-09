@@ -72,6 +72,34 @@ export const DynamicAsideMenuConfig = {
         }
       ]
     },
+    {
+      title: 'Movimientos',
+      root: true,
+      bullet: 'dot',
+      icon: 'flaticon2-user-outline-symbol',
+      svg: './assets/media/svg/icons/Navigation/Exchange.svg',
+      page: '/movimientos',
+      /*submenu: [
+        {
+          title: 'Formularios',
+          page: '/informes/fc'
+        }
+      ]*/
+    },
+    {
+      title: 'Bandeja de Entrada',
+      root: true,
+      bullet: 'dot',
+      icon: 'flaticon2-user-outline-symbol',
+      svg: './assets/media/svg/icons/Communication/Mail.svg',
+      //page: '/bandeja',
+      submenu: [
+        {
+          title: 'Solicitudes',
+          page: '/bandeja'
+        }
+      ]
+    },
     /*{
       title: 'Dashboard',
       root: true,

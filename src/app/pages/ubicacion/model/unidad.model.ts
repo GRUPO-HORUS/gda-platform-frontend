@@ -6,6 +6,8 @@ export class UnidadModel {
   nombre: string;
   entidad: EntidadModel;
 
+  unidades_hijas: any[];
+
   /*codigo: string;
   fechaCreacion: Date;
   fechaModificacion: Date;*/

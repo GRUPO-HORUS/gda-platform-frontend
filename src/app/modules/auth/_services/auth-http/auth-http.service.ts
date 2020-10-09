@@ -22,6 +22,9 @@ import { ContablesTabla } from '../../../../util/contables-tabla';
 import { TrazaTabla } from '../../../../util/traza-tabla';
 import { DashboardDTO } from '../../../../util/dashboard.dto';
 import { AsignacionesTabla } from '../../../../util/asignaciones-tabla';
+import { AtributosCategoria } from '../../../../util/atributos-categoria';
+import { BienModel } from '../../../../pages/bienes/model/bien.model';
+import { RegistroBienDTO } from '../../../../util/registro-bien.dto';
 
 //const API_USERS_URL = `${environment.apiUrl}/users`;
 const API_USERS_URL = 'http://localhost:8081/api/v1';
@@ -102,6 +105,16 @@ export class AuthHTTPService {
     });
   }
 
+  //Recupera todos los usuarios de una unidad
+  getUsuariosUnidad(token, idUnidad, rol): Observable<UsuariosTabla> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.get<UsuariosTabla>(API_USERS_URL+'/auth/usuarios/rol/'+rol+'/unidad/'+idUnidad, {
+      headers: httpHeaders,
+    });
+  }
+
   getStatsDashboard(token): Observable<DashboardDTO> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${token}`,
@@ -116,6 +129,15 @@ export class AuthHTTPService {
       Authorization: `Bearer ${token}`,
     });
     return this.http.get<BienesTabla>(API_USERS_URL+'/bien', {
+      headers: httpHeaders,
+    });
+  }
+
+  getAtributosCategoria(token, idCategoria): Observable<AtributosCategoria> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.get<AtributosCategoria>(API_USERS_URL+'/categoria/atributos/'+idCategoria, {
       headers: httpHeaders,
     });
   }
@@ -191,6 +213,17 @@ export class AuthHTTPService {
       Authorization: `Bearer ${token}`,
     });
     return this.http.get<TiposTabla>(API_USERS_URL+'/bien/tipos', {
+      headers: httpHeaders,
+    });
+  }
+
+  //Para guardar un bien nuevo
+  crearBien(token, bien: RegistroBienDTO): Observable<RegistroBienDTO> {
+    console.log(JSON.stringify(bien));
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.post<RegistroBienDTO>(API_USERS_URL+'/bien', JSON.stringify(bien),{
       headers: httpHeaders,
     });
   }

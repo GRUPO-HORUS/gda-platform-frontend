@@ -14,8 +14,9 @@ import { SubCategoriasTabla } from '../../util/subcategorias-tabla';
 import { TiposTabla } from '../../util/tipos-tabla';
 import { AtributoValorBienDTO } from '../../util/atributo-valor-bien.dto';
 import { AtributosBien } from '../../util/atributos-bien';
-import { UnidadesTabla } from '../../util/unidades-tabla';
+//import { UnidadesTabla } from '../../util/unidades-tabla';
 import { UnidadModel } from './model/unidad.model';
+import { UsuariosTabla } from '../../util/usuarios-tabla';
 
 @Injectable({
   providedIn: 'root',
@@ -48,6 +49,15 @@ export class UbicacionService implements OnDestroy {
   }
 
   // public methods
+  getAllMovimientos(): Observable<CategoriasTabla>{
+    const auth = this.getAuthFromLocalStorage(); 
+    return this.authHttpService.getAllCategorias(auth.access_token).pipe(
+      map((categorias: CategoriasTabla) => {
+        return categorias;
+      }),
+      );
+  }
+
   getAllCategorias(): Observable<CategoriasTabla>{
     const auth = this.getAuthFromLocalStorage(); 
     return this.authHttpService.getAllCategorias(auth.access_token).pipe(
@@ -91,6 +101,15 @@ export class UbicacionService implements OnDestroy {
         return bienes;
       }),
     );
+  }
+
+  getUsuariosUnidad(idUnidad, rol): Observable<UsuariosTabla>{
+    const auth = this.getAuthFromLocalStorage(); 
+    return this.authHttpService.getUsuariosUnidad(auth.access_token, idUnidad, rol).pipe(
+      map((users: UsuariosTabla) => {
+        return users;
+      }),
+      );
   }
 
   // private methods

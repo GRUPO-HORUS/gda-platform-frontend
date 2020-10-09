@@ -1,5 +1,3 @@
-<!--<p>Estoy en Bienes!</p>
-<app-dashboard-wrapper></app-dashboard-wrapper>-->
 
 <ng-container>
   <div class="row">
@@ -9,13 +7,13 @@
     <!--begin::Header-->
   <div class="card-header border-0 py-5">
     <h3 class="card-title align-items-start flex-column">
-      <span class="card-label font-weight-bolder text-dark">Bienes</span>
+      <span class="card-label font-weight-bolder text-dark">Movimientos</span>
       <!--<span class="text-muted mt-3 font-weight-bold font-size-sm">More than 400+ new members</span>-->
     </h3>
     <div class="card-toolbar">
       <!--<a class="btn btn-info font-weight-bolder font-size-sm mr-3 cursor-pointer">New Report</a>-->
       <a class="btn btn-light-success font-weight-bolder font-size-sm cursor-pointer" routerLink="nuevo"
-        >Crear Bien</a>
+        >Nuevo</a>
     </div>
   </div>
   <!--end::Header-->
@@ -23,22 +21,24 @@
   <!--begin::Body-->
   <div class="card-body pt-0 pb-3">
     <span class="navi-icon"><mat-form-field style="width: 400px;">
-      <input matInput (keyup)="filtrar($event.target.value)" placeholder="Filtro por rotulado, estado, fecha o valor de incorporación">
+      <input matInput (keyup)="filtrar($event.target.value)" placeholder="Filtro por rotulado, fecha o unidad">
     </mat-form-field>
     <i class="flaticon2-search"></i></span>
     <div class="tab-content">
       <!--begin::Table-->
       <table mat-table [dataSource]="dataSource">
-        <!-- Detalle Column 
-        <ng-container matColumnDef="detalle">
-          <th mat-header-cell *matHeaderCellDef style="width: 250px;"> Detalle </th>
-          <td mat-cell *matCellDef="let element" style="width: 250px;"> {{element.detalle}} </td>
-        </ng-container>-->
+        
 
         <!-- Rotulado Column -->
         <ng-container matColumnDef="rotulado">
           <th mat-header-cell *matHeaderCellDef> Rotulado </th>
           <td mat-cell *matCellDef="let element"> {{element.rotulado}} </td>
+        </ng-container>
+
+        <!-- Detalle Column-->
+        <ng-container matColumnDef="detalle">
+          <th mat-header-cell *matHeaderCellDef style="width: 250px;"> Detalle </th>
+          <td mat-cell *matCellDef="let element" style="width: 250px;"> {{element.detalle}} </td>
         </ng-container>
 
         <!-- Estado Column 
@@ -47,28 +47,22 @@
           <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
         </ng-container>-->
 
-        <!-- Fecha de Incorporación Column-->
-        <ng-container matColumnDef="fechaIncorporacion">
-          <th mat-header-cell *matHeaderCellDef> Fecha de Incorporación </th>
-          <td mat-cell *matCellDef="let element"> {{element.fechaIncorporacion | date:'dd/MM/yyyy'}} </td>
+        <!-- Fecha movimiento Column-->
+        <ng-container matColumnDef="fechaMovimiento">
+          <th mat-header-cell *matHeaderCellDef> Fecha del Movimiento </th>
+          <td mat-cell *matCellDef="let element"> {{element.fechaMovimiento | date:'dd/MM/yyyy'}} </td>
         </ng-container>
 
-        <!-- Valor de Incorporación Column -->
-        <ng-container matColumnDef="valorIncorporacion">
-          <th mat-header-cell *matHeaderCellDef> Valor de Incorporación </th>
-          <td mat-cell *matCellDef="let element"> {{element.valorIncorporacion | number: '2.':'es-ES'}} </td>
+        <!-- Unidad Origen Column -->
+        <ng-container matColumnDef="unidadOrigen">
+          <th mat-header-cell *matHeaderCellDef> Unidad Origen </th>
+          <td mat-cell *matCellDef="let element"> {{element.unidadOrigen}} </td>
         </ng-container>
 
-        <!--Categoria Column -->
-        <ng-container matColumnDef="gdaCategoriaBienId">
-          <th mat-header-cell *matHeaderCellDef> Categoría </th>
-          <td mat-cell *matCellDef="let element"> {{element.gdaCategoriaBienId.descripcion}} </td>
-        </ng-container>
-
-        <!-- Unidad Column -->
-        <ng-container matColumnDef="gdaUnidadUbicacionId">
-          <th mat-header-cell *matHeaderCellDef> Ubicación </th>
-          <td mat-cell *matCellDef="let element"> {{element.gdaUnidadUbicacionId.nombre}} </td>
+        <!-- Unidad Destino Column -->
+        <ng-container matColumnDef="unidadDestino">
+          <th mat-header-cell *matHeaderCellDef> Unidad Destino </th>
+          <td mat-cell *matCellDef="let element"> {{element.unidadDestino}} </td>
         </ng-container>
 
         <!-- Usuario Responsable Column -->

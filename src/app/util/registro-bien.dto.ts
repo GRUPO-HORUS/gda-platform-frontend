@@ -1,27 +1,19 @@
-import { CategoriaModel } from "./categoria.model";
-import { TipoBienModel } from "./tipo-bien.model";
-import { UnidadModel } from "./unidad.model";
 
-export class BienModel {
-  id: number;
-  rotulado: string;
+export class RegistroBienDTO {
+  estadoConservacion;
   detalle: string;
-  fechaIncorporacion: Date;
-  valorIncorporacion: number;
-  gdaCategoriaBienId: CategoriaModel;
-  gdaUnidadUbicacionId: UnidadModel;
-  
-  gdaBienTipo: TipoBienModel;
-  bienEstadoConservacion;
   existenciaInventario;
+  tipoBienId: string;
+  categoriaBienId: string;
+  unidadUbicacionId: string;
   usuarioResponsableId:string;
   usuarioAsignadoId:string;
   usuarioAprobadorId:string;
   usuarioControlId:string;
   usuarioRegistroId:string;
-
+  //fechaIncorporacion: Date;
+  valorIncorporacion: number;
   atributosDinamicos: any[]=[];
-  imagen:string;
   
   /*setBien(bien: any) {
     this.id = bien.id;

@@ -44,7 +44,7 @@ export class MixedBienesComponent implements OnInit {
     this.chartOptions = this.getChartOptions();
     setTimeout (() => {
       this.router.navigate(['/']);
-    }, 1500);
+    }, 1200);
     /*const subs = this.dashboardService.getStatsDashboard().subscribe(stats => {
       this.totalBienes = stats.totalElementos;
       this.pendientesEtiqueta = stats.pendientesEtiquetado;

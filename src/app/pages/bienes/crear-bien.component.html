@@ -74,7 +74,7 @@
           <div class="form-group" style="margin-left: 10px;">
             <label class="font-size-h6 font-weight-bolder text-dark pt-5">Categoría</label>
             <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" 
-            data-live-search="true" formControlName="categoria" (change)="getCategoriasHijas($event)"
+            data-live-search="true" formControlName="categoria" (change)="getCategoriasHijas($event, 'base')"
             [ngClass]="{'is-invalid': basicoForm.controls['categoria'].invalid}">
               <!--<option>
                 Seleccione
@@ -94,7 +94,7 @@
           <div class="form-group" style="margin-left: 10px;">
             <label class="font-size-h6 font-weight-bolder text-dark pt-5">Sub Categoría</label>
             <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" 
-            data-live-search="true" formControlName="{{hija.nombre}}" (change)="getCategoriasHijas($event)">
+            data-live-search="true" formControlName="{{hija.nombre}}" (change)="getCategoriasHijas($event, 'noBase')">
               <option *ngFor="let subcategoria of hija.subcategorias" [value]="subcategoria.value">
                   {{subcategoria.label}}
               </option>
@@ -183,7 +183,7 @@
         <input
           class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6"
           type="date"
-          min="0"
+          max="{{fechaMax}}"
           name="fechaIncorporacion"
           formControlName="fechaIncorporacion"
           placeholder="Fecha de Incorporación"

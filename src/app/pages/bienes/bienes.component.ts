@@ -9,6 +9,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { VerBienComponent } from './ver-bien/ver-bien.component';
 import { MatDialog } from '@angular/material/dialog';
 
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-bienes',
@@ -28,9 +29,14 @@ export class BienesComponent implements OnInit {
   cantNuevos;
   edicion:boolean;
 
-  constructor(private bienesService: BienesService, private router: Router, private dialog: MatDialog) {
+  estado;
+
+  constructor(private bienesService: BienesService, private router: Router, private dialog: MatDialog, private activatedRoute:ActivatedRoute) {
+
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.estado = params['estado'];
+    });
     /*if(this.router.getCurrentNavigation().extras.state !== undefined){
-        //console.log(this.router.getCurrentNavigation().extras.state.bien);
         this.nuevoBien = this.router.getCurrentNavigation().extras.state.bien;
         this.bandera = true;
         //this.nuevoBien2 = localStorage.getItem(this.nuevoBien.id);
@@ -67,13 +73,12 @@ export class BienesComponent implements OnInit {
     //this.dataSource = new MatTableDataSource<BienData>(BIEN_DATA);
     
     this.bienesService.getAllBienes().subscribe(bienes => {
-      //let bienesA = bienes.content;
+      
       /*bienes.content.push({id:2, rotulado: '0000-0001-002', detalle: 'Monitor Samsung', fechaIncorporacion: new Date(), valorIncorporacion: 700000, 
       gdaCategoriaBienId:{id:'7fdfbc99-a168-4f31-b794-a7d7ac02bd00', descripcion: 'UNIDAD CENTRAL DE PROCESAMIENTO (CPU)'}, gdaUnidadUbicacionId:{id:'7fdfbc99-a168-4f31-b794-a7d7ac02bd00', nombre: 'Gestión de Proyectos'}});*/
       /*if(this.bandera){
         if(!this.edicion){
           this.length = bienes.totalElements+1;
-          //this.nuevoBien2 = JSON.parse(localStorage.getItem(this.nuevoBien.id));
           bienes.content.push(this.nuevoBien);
         }else{
           bienes.content.shift();
@@ -84,9 +89,32 @@ export class BienesComponent implements OnInit {
         this.length = bienes.totalElements;
       }*/
 
-      this.dataSource = new MatTableDataSource<BienData>(bienes.content);
+      let bienesTotal = bienes.content;
+
+      if(this.estado == 'TODOS'){
+        this.dataSource = new MatTableDataSource<BienData>(bienes.content);
+        this.length =bienes.totalElements;
+      }else if(this.estado == 'PENDIENTE_ETIQUETADO'){
+        let bienesPendEtiquetado = [];
+        for(let bien of bienesTotal){
+          if(bien.bienEstado == 'PENDIENTE_ETIQUETADO'){
+            bienesPendEtiquetado.push(bien);
+          }
+        }
+        this.dataSource = new MatTableDataSource<BienData>(bienesPendEtiquetado);
+        this.length =bienesPendEtiquetado.length;
+      }else if(this.estado == 'PENDIENTE_APROBACION'){
+        let bienesPendAprobacion = [];
+        for(let bien of bienesTotal){
+          if(bien.bienEstado == 'PENDIENTE_APROBACION'){
+            bienesPendAprobacion.push(bien);
+          }
+        }
+        this.dataSource = new MatTableDataSource<BienData>(bienesPendAprobacion);
+        this.length =bienesPendAprobacion.length;
+      }
+      
       this.dataSource.paginator = this.paginator;
-      this.length =bienes.totalElements;
 
       this.dataSource.filterPredicate = (data: BienData, filter: string): boolean => {
 
@@ -128,6 +156,7 @@ export interface BienData {
   valorIncorporacion: number;
   gdaCategoriaBienId: CategoriaModel;
   gdaUnidadUbicacionId: UnidadModel;
+  bienEstado: string;
   //gdaTipoBien: TipoBienModel;
   /*setBien(bien: any) {
     this.id = '';

@@ -12,6 +12,7 @@ export class BienModel {
   gdaUnidadUbicacionId: UnidadModel;
   
   gdaBienTipo: TipoBienModel;
+  bienEstado: string;
   bienEstadoConservacion;
   existenciaInventario;
   usuarioResponsableId:string;

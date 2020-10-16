@@ -71,14 +71,14 @@ export class DashboardService implements OnDestroy {
       );
   }
 
-  getAllCategoriasHijas(idPadre): Observable<SubCategoriasTabla>{
+  /*getAllCategoriasHijas(idPadre): Observable<SubCategoriasTabla>{
     const auth = this.getAuthFromLocalStorage(); 
     return this.authHttpService.getAllCategoriasHijas(auth.access_token, idPadre).pipe(
       map((categorias: SubCategoriasTabla) => {
         return categorias;
       }),
       );
-  }
+  }*/
 
   // private methods
   private getAuthFromLocalStorage(): AuthModel {

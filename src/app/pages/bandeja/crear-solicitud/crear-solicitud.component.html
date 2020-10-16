@@ -1,0 +1,184 @@
+<!--<div class="login login-1 login-signin-on d-flex flex-column flex-lg-row flex-column-fluid bg-white" id="kt_login">-->
+  <div class="login login-1 login-signin-on flex-column flex-lg-row flex-column-fluid bg-white" id="kt_login">
+    <!-- begin::Alert info *ngIf="!hasError"-->
+    <!--<ng-container *ngIf="guardo">
+      <div class="mb-10 alert alert-custom alert-light-bien alert-dismissible">
+        <div class="alert-text">
+          Se ha guardado correctamente el bien.
+        </div>
+      </div>
+    </ng-container>-->
+    <!-- end::Alert info-->
+  
+    <!-- begin::Alert error-->
+    <!--<ng-container *ngIf="hasError">
+        <div class="mb-10 alert alert-custom alert-light-danger alert-dismissible">
+          <div class="alert-text">{{errorMsg}}</div>
+        </div>
+    </ng-container>-->
+    <!-- end::Alert error-->
+    <!--begin::Title-->
+    <div class="card-header border-0 py-5">
+    <!--<div class="pb-13 pt-lg-0 pt-5" style="margin-left: 50px;">-->
+      <h3 class="card-title align-items-start flex-column"><!--font-weight-bolder text-dark font-size-h4 font-size-h1-lg-->
+        <span class="card-label font-weight-bolder text-dark" style="font-size: 1.275rem !important">Generar Solicitud</span>
+      </h3>
+      <!--<p class="text-muted font-weight-bold font-size-h4">Complete los datos requeridos para crear el bien.</p>-->
+    </div>
+    <!--end::Title || adicionalForm.invalid-->
+    <div class="container">
+     
+      <button
+      type="button"
+      id="kt_login_signup_submit"
+      [disabled]="movimientoForm.invalid"
+      class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4"
+      (click)="submit()">
+      Guardar
+      </button>
+    
+      <form
+      class="form"
+      novalidate="novalidate"
+      id="kt_login_signup_form"
+      [formGroup]="movimientoForm"
+      (ngSubmit)="submit()">
+      <div class="row">
+        <div class="col-md">
+          <div class="form-group" style="margin-left: 10px;">
+            <label class="font-size-h6 font-weight-bolder text-dark pt-5">Tipo de Solicitud</label>
+            <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" 
+            data-live-search="true" formControlName="tipoSolicitud" (change)="setVisible($event)">
+              <option *ngFor="let tipo of tiposSolicDrop" [value]="tipo.value">
+                  {{tipo.label}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md">
+          <div class="form-group" style="margin-left: 10px;">
+            <label class="font-size-h6 font-weight-bolder text-dark">Detalle</label>
+            <textarea type="text" id="form7" rows="8" class="form-control form-control-solid" formControlName="detalle" [ngClass]="{'is-invalid': movimientoForm.controls['detalle'].invalid}"></textarea>
+            <ng-container
+              [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{
+                validation: 'required',
+                message: 'El detalle del bien es requerido',
+                control: movimientoForm.controls['detalle']
+              }"
+            ></ng-container>
+            <ng-container
+              [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{
+                validation: 'minlength',
+                message: 'El detalle del bien debe tener al menos 3 caracteres',
+                control: movimientoForm.controls['detalle']
+              }"
+            ></ng-container>
+            <ng-container
+              [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{
+                validation: 'maxLength',
+                message: 'El detalle del bien debe tener como máximo 255 caracteres',
+                control: movimientoForm.controls['detalle']
+              }"
+            ></ng-container>
+          </div>
+          <!--end::Form group-->
+        </div>
+      </div>
+      <div class="row" *ngIf="visible">
+        <div class="col-md">
+       <div class="form-group" style="margin-left: 10px;">
+        <label class="font-size-h6 font-weight-bolder text-dark pt-5">Unidad de Origen</label>
+        <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" 
+        data-live-search="true" formControlName="unidad" (change)="getUsuariosUnidad($event)">
+          <option *ngFor="let unidad of unidadesDrop" [value]="unidad.value">
+              {{unidad.label}}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md">
+      <div class="form-group" style="margin-left: 10px;">
+        <label class="font-size-h6 font-weight-bolder text-dark pt-5">Unidad Destino</label>
+        <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" 
+        data-live-search="true" formControlName="unidad" (change)="getUsuariosUnidad($event)">
+          <option *ngFor="let unidad of unidadesDrop" [value]="unidad.value">
+              {{unidad.label}}
+          </option>
+        </select>
+      </div>
+    </div>
+    </div>
+    <!--end::row-->
+    <!--<div class="row">
+      <div class="col-md">
+        <div class="form-group" style="margin-left: 10px;">
+          <label class="font-size-h6 font-weight-bolder text-dark pt-5">Usuario Asignado</label>
+          <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" data-live-search="true" formControlName="usuarioAsignado">
+            <option *ngFor="let usuario of usuarioAsignadoDrop" [value]="usuario.value">
+                {{usuario.label}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md">
+      <div class="form-group" style="margin-left: 10px;">
+        <label class="font-size-h6 font-weight-bolder text-dark pt-5">Usuario Aprobador</label>
+        <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" data-live-search="true" formControlName="usuarioAprobador">
+          <option *ngFor="let usuario of usuarioAprobadorDrop" [value]="usuario.value">
+              {{usuario.label}}
+          </option>
+        </select>
+      </div>
+    </div>
+    </div>-->
+    <!--<div class="row">
+      <div class="col-md">
+        <div class="form-group" style="margin-left: 10px;">
+          <label class="font-size-h6 font-weight-bolder text-dark pt-5">Usuario de Control</label>
+          <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" data-live-search="true" formControlName="usuarioControl">
+            <option *ngFor="let usuario of usuarioControlDrop" [value]="usuario.value">
+                {{usuario.label}}
+            </option>
+          </select>
+        </div>
+      </div>
+    
+      <div class="col-md">
+      <div class="form-group" style="margin-left: 10px;">
+        <label class="font-size-h6 font-weight-bolder text-dark pt-5">Usuario de Registro</label>
+        <select class="form-control form-control-solid h-auto py-3 px-6 rounded-lg font-size-h6 selectpicker" data-live-search="true" formControlName="usuarioRegistro">
+          <option *ngFor="let usuario of usuarioRegistroDrop" [value]="usuario.value">
+              {{usuario.label}}
+          </option>
+        </select>
+      </div>
+    </div>
+    </div>-->
+      </form>
+  </div>
+  <!--end container [ngClass]="{'is-invalid': adicionalForm.controls['Velocidad'].invalid}"-->
+<!--begin::Signup-->
+<div class="login-form login-signup">
+    
+</div>
+  <!--end::Signup-->
+</div>
+  <ng-template
+  #formError
+  let-control="control"
+  let-message="message"
+  let-validation="validation"
+>
+  <ng-container
+    *ngIf="control.hasError(validation) && (control.dirty || control.touched)"
+  >
+    <div class="fv-plugins-message-container">
+      <div class="fv-help-block">
+        {{ message }}
+      </div>
+    </div>
+  </ng-container>
+</ng-template>

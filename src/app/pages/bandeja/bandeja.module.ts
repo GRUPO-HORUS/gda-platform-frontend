@@ -15,9 +15,11 @@ import { AuthGuard } from '../../modules/auth/_services/auth.guard';
 
 import es from '@angular/common/locales/es';
 import { BandejaComponent } from './bandeja.component';
+import { CrearSolicitudComponent } from './crear-solicitud/crear-solicitud.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 registerLocaleData(es);
 @NgModule({
-  declarations: [BandejaComponent],
+  declarations: [BandejaComponent, CrearSolicitudComponent],
   imports: [
     ReactiveFormsModule,
     FormsModule,
@@ -27,6 +29,7 @@ registerLocaleData(es);
     MatTabsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSnackBarModule,
     CommonModule,
     RouterModule.forChild([
       {
@@ -34,12 +37,12 @@ registerLocaleData(es);
         component: BandejaComponent,
         canActivate: [AuthGuard],
       },
-      /*{
+      {
         path: 'nuevo',
-        component: CrearBienComponent,
+        component: CrearSolicitudComponent,
         canActivate: [AuthGuard],
       },
-      {
+      /*{
         path: 'ver',
         component: VerBienComponent,
         canActivate: [AuthGuard],

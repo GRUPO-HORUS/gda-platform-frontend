@@ -199,11 +199,11 @@ export class AuthHTTPService {
   }
 
   //Recupera todos los usuarios existentes
-  getAllCategoriasHijas(token, idPadre): Observable<SubCategoriasTabla> {
+  getAllCategoriasHijas(token, idPadre): Observable<CategoriasTabla> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.get<SubCategoriasTabla>(API_USERS_URL+'/categoria/hijas/'+idPadre, {
+    return this.http.get<CategoriasTabla>(API_USERS_URL+'/categoria/hijas/'+idPadre, {
       headers: httpHeaders,
     });
   }

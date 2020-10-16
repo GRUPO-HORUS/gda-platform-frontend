@@ -53,7 +53,7 @@
       <!--begin::Row-->
       <div class="row m-0">
         <div class="col bg-light-warning px-6 py-8 rounded-xl mr-7 mb-7">
-          <a class="text-warning font-weight-bold font-size-h6" routerLink="/bienes"><span
+          <a class="text-warning font-weight-bold font-size-h6" [routerLink]="['/bienes']" [queryParams]="{estado: 'TODOS'}"><span
             [inlineSVG]="'./assets/media/svg/icons/Shopping/Chart-bar3.svg'"
             class="svg-icon svg-icon-3x svg-icon-warning d-block my-2"
           ></span>
@@ -61,11 +61,11 @@
           <!--<a href="#" class="text-warning font-weight-bold font-size-h6">Total de Ítems</a>-->
         </div>
         <div class="col bg-light-primary px-6 py-8 rounded-xl mb-7">
-          <span
+          <a class="text-warning font-weight-bold font-size-h6" [routerLink]="['/bienes']" [queryParams]="{estado: 'PENDIENTE_ETIQUETADO'}"><span
             [inlineSVG]="'./assets/media/svg/icons/Shopping/Barcode.svg'"
             class="svg-icon svg-icon-3x svg-icon-primary d-block my-2"
           ></span>
-          <span class="text-primary font-weight-bold font-size-h6">Pendientes de Etiquetado: <span class="text-primary font-weight-bold font-size-h3">{{pendientesEtiqueta}}</span></span>
+          <span class="text-primary font-weight-bold font-size-h6">Pendientes de Etiquetado: <span class="text-primary font-weight-bold font-size-h3">{{pendientesEtiqueta}}</span></span></a>
           <!--<a href="#" class="text-primary font-weight-bold font-size-h6 mt-2">New Users</a>-->
         </div>
       </div>
@@ -73,11 +73,11 @@
       <!--begin::Row-->
       <div class="row m-0">
         <div class="col bg-light-danger px-6 py-8 rounded-xl mr-7">
-          <span
+          <a class="text-warning font-weight-bold font-size-h6" [routerLink]="['/bienes']" [queryParams]="{estado: 'PENDIENTE_APROBACION'}"><span
             [inlineSVG]="'./assets/media/svg/icons/Code/Error-circle.svg'"
             class="svg-icon svg-icon-3x svg-icon-danger d-block my-2"
           ></span>
-          <span class="text-danger font-weight-bold font-size-h6">Pendientes de Aprobación: <span class="text-danger font-weight-bold font-size-h3">{{pendientesAprobacion}}</span></span>
+          <span class="text-danger font-weight-bold font-size-h6">Pendientes de Aprobación: <span class="text-danger font-weight-bold font-size-h3">{{pendientesAprobacion}}</span></span></a>
           <!--<a href="#" class="text-danger font-weight-bold font-size-h6 mt-2">Item Orders</a>-->
         </div>
         <div class="col bg-light-success px-6 py-8 rounded-xl">

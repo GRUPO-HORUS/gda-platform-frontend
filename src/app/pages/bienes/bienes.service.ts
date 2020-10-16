@@ -69,10 +69,10 @@ export class BienesService implements OnDestroy {
       );
   }
 
-  getAllCategoriasHijas(idPadre): Observable<SubCategoriasTabla>{
+  getAllCategoriasHijas(idPadre): Observable<CategoriasTabla>{
     const auth = this.getAuthFromLocalStorage(); 
     return this.authHttpService.getAllCategoriasHijas(auth.access_token, idPadre).pipe(
-      map((categorias: SubCategoriasTabla) => {
+      map((categorias: CategoriasTabla) => {
         return categorias;
       }),
       );

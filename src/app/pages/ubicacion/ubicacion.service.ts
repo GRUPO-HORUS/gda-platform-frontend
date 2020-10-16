@@ -76,14 +76,14 @@ export class UbicacionService implements OnDestroy {
       );
   }
 
-  getAllCategoriasHijas(idPadre): Observable<SubCategoriasTabla>{
+  /*getAllCategoriasHijas(idPadre): Observable<SubCategoriasTabla>{
     const auth = this.getAuthFromLocalStorage(); 
     return this.authHttpService.getAllCategoriasHijas(auth.access_token, idPadre).pipe(
       map((categorias: SubCategoriasTabla) => {
         return categorias;
       }),
       );
-  }
+  }*/
 
   getAllBienes(): Observable<BienesTabla>{
     const auth = this.getAuthFromLocalStorage(); 

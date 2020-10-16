@@ -299,19 +299,18 @@ export class EditarBienComponent implements OnInit {
         for (let i = 0; i < categoriasD.length; i++) {
             //let cates = categoriasD[i].gdaCategoriaBienList;
             //let cates = [];
-            if(categoriasD[i].gdaCategoriaBienList.length > 0 ){
+            /*if(categoriasD[i].gdaCategoriaBienList.length > 0 ){
               cates = categoriasD[i].gdaCategoriaBienList;
             }else{
               cates = categoriasD[i].gdaBienList;
-            }
+            }*/
 
             this.subCategoriasDrop = [];
-            for(let c of cates){
-              //this.subCategoriasDrop.push({ label: c.descripcion, value: c.id });
-              if(c.gdaCategoriaBienId !== undefined){
-                this.subCategoriasDrop.push({ label: c.gdaCategoriaBienId.descripcion, value: c.gdaCategoriaBienId.id });
-              } 
-            }
+            //for(let c of cates){
+              //if(c.gdaCategoriaBienId !== undefined){
+                this.subCategoriasDrop.push({ label: categoriasD[i].descripcion, value: categoriasD[i].id });
+              //} 
+           //}
         }
         catHija.subcategorias = this.subCategoriasDrop;
         //this.catHijas.push('subcategoria'+this.catHijas.length);
@@ -327,10 +326,48 @@ export class EditarBienComponent implements OnInit {
   }
 
   getHijasAlCambiar($event, band){
+      if(band==='base'){
+        this.catHijas = [];
+      }
+      this.subCategoriasDrop = [];
+      this.bienesService.getAllCategoriasHijas($event.target.value).subscribe(categorias => {
+        if(categorias.content.length > 0){
+          let catHija = new CatHija();
+          catHija.nombre = 'subcategoria'+this.catHijas.length;
+          let categoriasD = categorias.content;
+          for (let i = 0; i < categoriasD.length; i++) {
+            this.subCategoriasDrop.push({ label: categoriasD[i].descripcion, value: categoriasD[i].id });
+          }
+
+          catHija.subcategorias = this.subCategoriasDrop;
+          //this.catHijas.push('subcategoria'+this.catHijas.length);
+          this.catHijas.push(catHija);
+
+          for(let hija of this.catHijas){
+            //console.log(hija);
+            this.basicoForm.addControl(hija.nombre,this.fb.control(''));
+          }
+        }else{
+          this.ultimaCategoria = $event.target.value;
+
+          this.bienesService.getAtributosCategoria(this.ultimaCategoria).subscribe(atributos => { 
+            this.atributosList = atributos.atributoFormularioBien;
+            for(let atributo of this.atributosList){
+              if(atributo.requerido){
+                this.adicionalForm.addControl(atributo.nombre,this.fb.control('',  [Validators.required]));
+              }else{
+                this.adicionalForm.addControl(atributo.nombre,this.fb.control(''));
+              }
+            }
+          });
+        }
+      });
+  }
+
+  /*getHijasAlCambiarOrig($event, band){
     if(band==='base'){
       this.catHijas = [];
     }
-
     this.subCategoriasDrop = [];
     this.bienesService.getAllCategoriasHijas($event.target.value).subscribe(categorias => {
       if(categorias.content.length > 0){
@@ -345,7 +382,6 @@ export class EditarBienComponent implements OnInit {
               cates = categoriasD[i].gdaCategoriaBienList;
             }else{
               cates = categoriasD[i].gdaBienList;
-              //console.log(cates);
             }
             
             for(let c of cates){
@@ -360,7 +396,6 @@ export class EditarBienComponent implements OnInit {
         this.catHijas.push(catHija);
 
         for(let hija of this.catHijas){
-          //console.log(hija);
           this.basicoForm.addControl(hija.nombre,this.fb.control(''));
         }
       }else{
@@ -379,7 +414,7 @@ export class EditarBienComponent implements OnInit {
       }
      
     });
-  }
+  }*/
 
   /*getHijasAlCambiar($event, band){
     if(band==='base'){
